@@ -1,0 +1,1 @@
+<a class="brand" href="/"><img src="/img/logo-crcontactos-25pix.jpg" class="img-polaroid crcontactos-logo"></a>

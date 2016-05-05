@@ -1,0 +1,293 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2014-08-09 18:58-0600\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "List Agencias"
+msgstr "Agencias"
+
+msgid "The agencia has been saved."
+msgstr "La agencia ha sido salvada."
+
+msgid "The agencia could not be saved. Please, try again."
+msgstr "No se pudo salvar la agencia, Intente de nuevo."
+
+msgid "The agencia could not be deleted. Please, try again."
+msgstr "No se pudo borrar la agencia"
+
+msgid "The agencia has been deleted."
+msgstr "La Agencia ha sido borrada"
+
+msgid "infofieldset"
+msgstr "Información"
+
+msgid "records per page"
+msgstr "registros por pagina"
+
+#: Controller/MarcasController.php:38;70;95;125;157;182
+msgid "Invalid marca"
+msgstr ""
+
+#: Controller/MarcasController.php:53;74;140;161
+msgid "The marca has been saved."
+msgstr "La Marca ha sido salvada"
+
+#: Controller/MarcasController.php:56;77;143;164
+msgid "The marca could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/MarcasController.php:99;186
+msgid "The marca has been deleted."
+msgstr ""
+
+#: Controller/MarcasController.php:101;188
+msgid "The marca could not be deleted. Please, try again."
+msgstr ""
+
+#: Controller/UsuariosController.php:37;69;94
+msgid "Invalid usuario"
+msgstr ""
+
+#: Controller/UsuariosController.php:52;73
+msgid "The usuario has been saved."
+msgstr ""
+
+#: Controller/UsuariosController.php:55;76
+msgid "The usuario could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/UsuariosController.php:98
+msgid "The usuario has been deleted."
+msgstr ""
+
+#: Controller/UsuariosController.php:100
+msgid "The usuario could not be deleted. Please, try again."
+msgstr ""
+
+#: Plugin/BoostCake/Controller/BoostCakeController.php:18
+msgid "Debug setting does not allow access to this url."
+msgstr ""
+
+#: Plugin/BoostCake/Controller/BoostCakeController.php:27
+#: Plugin/BoostCake/View/Elements/bootstrap2/alerts.ctp:6
+msgid "Alert notice message testing..."
+msgstr ""
+
+#: Plugin/BoostCake/Controller/BoostCakeController.php:30;41
+#: Plugin/BoostCake/View/Elements/bootstrap2/alerts.ctp:10
+#: Plugin/BoostCake/View/Elements/bootstrap3/alerts.ctp:6
+msgid "Alert success message testing..."
+msgstr ""
+
+#: Plugin/BoostCake/Controller/BoostCakeController.php:34
+#: Plugin/BoostCake/View/Elements/bootstrap2/alerts.ctp:15
+msgid "Alert error message testing..."
+msgstr ""
+
+#: Plugin/BoostCake/Controller/BoostCakeController.php:45
+#: Plugin/BoostCake/View/Elements/bootstrap3/alerts.ctp:11
+msgid "Alert info message testing..."
+msgstr ""
+
+#: Plugin/BoostCake/Controller/BoostCakeController.php:49
+#: Plugin/BoostCake/View/Elements/bootstrap3/alerts.ctp:16
+msgid "Alert warning message testing..."
+msgstr ""
+
+#: Plugin/BoostCake/Controller/BoostCakeController.php:53
+#: Plugin/BoostCake/View/Elements/bootstrap3/alerts.ctp:21
+msgid "Alert danger message testing..."
+msgstr ""
+
+#: View/Marcas/add.ctp:13
+msgid "Add Marca"
+msgstr "Crear Marca"
+
+#: View/Marcas/add.ctp:19
+#: View/Marcas/edit.ctp:20
+#: View/Usuarios/add.ctp:23
+#: View/Usuarios/edit.ctp:15
+msgid "Submit"
+msgstr "Salvar"
+
+#: View/Marcas/add.ctp:22
+#: View/Marcas/edit.ctp:23
+#: View/Marcas/index.ctp:9;42
+#: View/Marcas/view.ctp:22
+#: View/Usuarios/add.ctp:26
+#: View/Usuarios/edit.ctp:18
+#: View/Usuarios/index.ctp:13;50
+#: View/Usuarios/view.ctp:42
+msgid "Actions"
+msgstr "Acciones"
+
+#: View/Marcas/add.ctp:25
+#: View/Marcas/edit.ctp:27
+#: View/Marcas/view.ctp:26
+msgid "List Marcas"
+msgstr "Marcas"
+
+#: View/Marcas/edit.ctp:13
+#: View/Marcas/view.ctp:24
+msgid "Edit Marca"
+msgstr "Editar"
+
+#: View/Marcas/edit.ctp:26
+#: View/Marcas/index.ctp:21
+#: View/Usuarios/edit.ctp:21
+#: View/Usuarios/index.ctp:29
+msgid "Delete"
+msgstr "Borrar"
+
+#: View/Marcas/edit.ctp:26
+#: View/Marcas/index.ctp:21
+#: View/Marcas/view.ctp:25
+#: View/Usuarios/edit.ctp:21
+#: View/Usuarios/index.ctp:29
+#: View/Usuarios/view.ctp:45
+msgid "Are you sure you want to delete # %s?"
+msgstr "Deberas quiere borrar # %s?"
+
+#: View/Marcas/index.ctp:2
+msgid "Marcas"
+msgstr ""
+
+#: View/Marcas/index.ctp:19
+#: View/Usuarios/index.ctp:27
+msgid "View"
+msgstr "Ver"
+
+#: View/Marcas/index.ctp:20
+#: View/Usuarios/index.ctp:28
+msgid "Edit"
+msgstr "Editar"
+
+#: View/Marcas/index.ctp:30
+#: View/Usuarios/index.ctp:38
+msgid "Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}"
+msgstr "Pagina {:page} de {:pages}, mostrando {:current} registros de {:count} en total, empezando en {:start}, terminando en {:end}"
+
+#: View/Marcas/index.ctp:35
+#: View/Usuarios/index.ctp:43
+msgid "previous"
+msgstr "previo"
+
+#: View/Marcas/index.ctp:37
+#: View/Usuarios/index.ctp:45
+msgid "next"
+msgstr "siguiente"
+
+#: View/Marcas/view.ctp:2
+msgid "Marca"
+msgstr "Marca"
+
+#: View/Marcas/view.ctp:4
+#: View/Usuarios/view.ctp:4
+msgid "Id"
+msgstr ""
+
+#: View/Marcas/view.ctp:9
+#: View/Usuarios/view.ctp:9
+msgid "Nombre"
+msgstr ""
+
+#: View/Marcas/view.ctp:14
+msgid "Logo File"
+msgstr ""
+
+#: View/Marcas/view.ctp:25
+msgid "Delete Marca"
+msgstr "Borrar Marca"
+
+#: View/Marcas/view.ctp:27
+msgid "New Marca"
+msgstr "Crear Marca"
+
+#: View/Puertas/frente.ctp:15
+msgid "Please enter your username and password"
+msgstr "Porfavor digite su email y password"
+
+#: View/Puertas/frente.ctp:21
+msgid "Login"
+msgstr ""
+
+#: View/Usuarios/add.ctp:13
+msgid "Add Usuario"
+msgstr ""
+
+#: View/Usuarios/add.ctp:29
+#: View/Usuarios/edit.ctp:22
+#: View/Usuarios/view.ctp:46
+msgid "List Usuarios"
+msgstr ""
+
+#: View/Usuarios/edit.ctp:4
+#: View/Usuarios/view.ctp:44
+msgid "Edit Usuario"
+msgstr ""
+
+#: View/Usuarios/index.ctp:2
+msgid "Usuarios"
+msgstr ""
+
+#: View/Usuarios/index.ctp:52
+#: View/Usuarios/view.ctp:47
+msgid "New Usuario"
+msgstr ""
+
+#: View/Usuarios/view.ctp:2
+msgid "Usuario"
+msgstr ""
+
+#: View/Usuarios/view.ctp:14
+msgid "Email"
+msgstr ""
+
+#: View/Usuarios/view.ctp:19
+msgid "Password"
+msgstr ""
+
+#: View/Usuarios/view.ctp:24
+msgid "Is Superadmin"
+msgstr ""
+
+#: View/Usuarios/view.ctp:29
+msgid "Created At"
+msgstr ""
+
+#: View/Usuarios/view.ctp:34
+msgid "Updated At"
+msgstr ""
+
+#: View/Usuarios/view.ctp:45
+msgid "Delete Usuario"
+msgstr ""
+
+#: View/ViewBlock.php:78
+msgid "A view block with the name '%s' is already/still open."
+msgstr ""
+
+#: Model/Marca.php:validation for field nombre
+#: Model/Usuario.php:validation for field nombre;validation for field password
+msgid "notEmpty"
+msgstr ""
+
+#: Model/Usuario.php:validation for field email
+msgid "email"
+msgstr ""
+
+#: Model/Usuario.php:validation for field is_superadmin
+msgid "boolean"
+msgstr ""
+
