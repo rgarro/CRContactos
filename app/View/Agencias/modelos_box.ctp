@@ -13,7 +13,7 @@
 				
 
 <?php 
-//if(count($m['agmodels'])){
+if(count($m['Marca']['Modelo'])){
 ?>
 <ul class="dashboard-list">
 <?php foreach($m['Marca']['Modelo'] as $mo){ 
@@ -34,7 +34,7 @@
 
 <?php } ?>	
 </ul>	
-<?php //} ?>	
+<?php } ?>	
 </span>
 	</center>
 	</li>	
