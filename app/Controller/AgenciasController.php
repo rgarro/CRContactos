@@ -11,7 +11,7 @@ App::uses('CrcController', 'Controller');
 
 class AgenciasController extends CrcController {
 
-	public $uses = array('ModeloPic','Notificacione','Marca','ModeloAgencia','MarcaAgencia','Administradore','User','Agencia','Vendedore');
+	public $uses = array('ModeloPic','Notificacione','Marca','ModeloAgencia','MarcaAgencia','Administradore','User','Agencia','Vendedore','LeadSeguidore');
 
 	public function cambiar_user_status(){
 		$this->allow_sa_and_admin();
@@ -44,6 +44,23 @@ class AgenciasController extends CrcController {
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
 		$this->Notificacione->delete($_GET['nid']);
+		$data = array("is_success"=>1);
+		$this->set('data', $data);
+		$this->render("/General/serialize_json");	
+	}
+
+	public function delete_user(){
+		$this->allow_sa_and_admin();
+		$this->_filter_employees_only($this->Session->read('agencia_id'));
+		$this->layout = "ajax";
+		if($_GET['user_type'] == "administrador"){
+			$this->Administradore->delete(['Administradore.user_id'=>$_GET['user_id']],true);
+		}else{
+			$this->Vendedore->delete(['Vendedore.user_id'=>$_GET['user_id']],true);
+		}
+		$this->LeadSeguidore->deleteAll(['LeadSeguidore.user_id'=>$_GET['user_id']],true);
+
+		$this->User->query("DELETE FROM users WHERE id='".$_GET['user_id']."'");
 		$data = array("is_success"=>1);
 		$this->set('data', $data);
 		$this->render("/General/serialize_json");	

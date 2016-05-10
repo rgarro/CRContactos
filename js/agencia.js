@@ -45,6 +45,23 @@ var Agencia = {
 		'removernotificacionagencia':'.removernotificacionagencia',
 		'removerNotificacionAgenciaUrl':'/index.php/agencias/remover_notificacion'
 	},
+	'remove_user':function(user_id,user_type){
+		$.ajax({
+			   url:"/index.php/agencias/delete_user",
+			   data:{
+				user_id:user_id,
+				user_type:user_type
+			   },
+			   type:"GET",
+			   dataType:"json",
+			   success:function(data){
+				CRContactos_Manager.check_errors(data);
+				noty({text: "Se Borro el Usuario con todos sus Datos.",layout:'topLeft',type:'success'});
+				Agencia.cargar_vendedores_box();
+				Agencia.cargar_administradores_box();
+			   }
+			});
+	},
 	'mostrarAgenciaModelos':function(){
 		$.ajax({
 			url:Agencia.options.lista_modelos_url,
@@ -248,6 +265,14 @@ var Agencia = {
 			if(window.confirm(msg)){
 				Agencia.cambiar_user_status(user_id,active);
 			}
+		});
+		
+		$(document).on("click",".delete-user",function(){
+					   var user_id = $(this).attr("user_id");
+					    var user_type = $(this).attr("user_type");
+					   if(window.confirm("Remover Usuario?")){
+						Agencia.remove_user(user_id,user_type);
+					   }
 		});
 		
 		$(document).on("click",Agencia.options.removernotificacionagencia,function(){
