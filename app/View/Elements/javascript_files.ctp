@@ -44,6 +44,7 @@
 <script src="/js/marcas.js"></script>
 <script src="/js/reportes_admin.js"></script>
 <script src="/js/sa.js"></script>
+<script src="/js/cRc/UI/rotate-box.js"></script>
 		<script type="text/javascript">
 	
 	function message_welcome1(){

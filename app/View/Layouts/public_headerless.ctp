@@ -63,6 +63,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->fetch('script');
 		echo $this->element('javascript_files');
 	?>
+	<link href="/css/tresdcontainer.css" rel="stylesheet">
 </head>
 <body>
 	<?php //echo $this->element('public_header');?>
