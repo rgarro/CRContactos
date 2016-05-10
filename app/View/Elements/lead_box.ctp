@@ -48,9 +48,10 @@ $email_leads = $leadModel->findAllByEmailAndAgenciaId($lead['Lead']['email'],$_S
 	  </figure>
       <figure class="back">
 	  <span>
-	  <a class="btn btn-mini btn-inverse lead-email-btn" modal_id="leadModal<?php echo $lead['Lead']['id'];?>" style="float:left;" title="<?php echo $lead['Lead']['email'];?>"><i class="icon-envelope icon-white"></i>
-      <span class="label hidden-phone"><?php echo count($email_leads);?></span></a>
-	<br></span>
+	  <a class="btn btn-mini btn-inverse lead-email-btn" modal_id="leadModal<?php echo $lead['Lead']['id'];?>" title="<?php echo $lead['Lead']['email'];?>"><i class="icon-envelope icon-white"></i>
+      <span class="label hidden-phone"><?php echo count($email_leads);?>
+	<?php echo $lead['Lead']['email'];?></span></a>
+	</span>
 	  </figure>
       <figure class="right">
 	  <span class="badge <?php echo $status_class;?>" style="margin-top: 5px;"><i class="fa-icon-cog"></i> <?php echo $lead['Lead']['modelos'];?>
