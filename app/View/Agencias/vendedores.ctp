@@ -17,7 +17,7 @@ foreach($vendedores as $v){
 <button type="button" user_id="<?php echo $v['User']['id'];?>" class="btn btn-success btn-mini change-user-pass"><i class="fa-icon-key"></i></button>						
 <button type="button" user_type="vendedor" user_id="<?php echo $v['User']['id'];?>" class="btn btn-danger btn-mini delete-user"><i class="fa fa-trash-o"></i></button>
 			</td>
-			<td class="center">
+			<td class="center myclass">
 				<?php if($v['User']['active']){ ?>
 					<span class="label label-success">Activo</span>
 					<?php }else{ ?>
