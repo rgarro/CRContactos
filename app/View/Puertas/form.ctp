@@ -147,7 +147,7 @@ echo $this->Form->input('status', array('type'=>'hidden','value' => 1));
 <?php
 echo $this->Form->input('comentario', array('type'=>'textarea'));
 //echo $this->Form->input('fuente', array('options'=>$fuentes));								
-echo $this->Form->input('boletin', array('type'=>'checkbox','label'=>"<small>Deseo subscribirme al boletín de noticias <a href='http://www.crmotos.com/'>CRMotos.com</a></small>",'value' => 1));								
+echo $this->Form->input('boletin', array('type'=>'hidden','value' => 1));								
 echo $this->Form->input('lat', array('type'=>'hidden','value' => 0));
 echo $this->Form->input('lon', array('type'=>'hidden','value' => 0));
 ?>	
