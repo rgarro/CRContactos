@@ -1,6 +1,7 @@
 <?php 
 foreach($vendedores as $v){ 
-	if($v['User']['id'] > 0){		
+	if($v['User']['id'] > 0){	
+	//here	
 ?>
 	<tr>
 		<td>
