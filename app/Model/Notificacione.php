@@ -31,11 +31,11 @@ class Notificacione extends AppModel {
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+			)/*,
 			'isUnique' => array(
         		'rule'    => 'isUnique',
         		'message' => 'Esta Notificacion ya Existe.'
-    		)
+    		)*/
 		),
 	);
 
