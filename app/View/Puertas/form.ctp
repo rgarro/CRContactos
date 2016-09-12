@@ -3,7 +3,7 @@
 <script type="text/javascript" src="/app/webroot/js/crcontactos_manager.js"></script>
 <script type="text/javascript" src="/app/webroot/js/agregar_lead_manualp.js"></script>
 <script type="text/javascript">
-function manage_position(position) { 
+function manage_position(position) {
 	var latitude = position.coords.latitude;
 	var longitude = position.coords.longitude;
 	$("#LeadLat").attr("value",latitude);
@@ -11,7 +11,9 @@ function manage_position(position) {
 }
 
 	$(document).ready(function(){
-		navigator.geolocation.getCurrentPosition(manage_position);
+		//navigator.geolocation.getCurrentPosition(manage_position);
+		$("#LeadLat").attr("value","9.74891699");
+		$("#LeadLon").attr("value","-83.75342799");
 		AddLead.getOptions({
 			'modelocheck':'.modelocheck',
 			'LeadAgregarLeadDirectamenteForm':'#LeadFormForm',
@@ -22,7 +24,7 @@ function manage_position(position) {
 	});
 </script>
 <div class="agencias form">
-	
+
 <?php
 foreach($modelos_agencia as $m){
 	if($m['Marca']['id'] == $_GET['marca_id']){
@@ -43,10 +45,10 @@ foreach($modelos_agencia as $m){
 	'url'=>array("controller"=>"puertas","action"=>"form?agencia_id=".$_GET['agencia_id']."&marca_id=".$_GET['marca_id'])
 )); ?>
 	<fieldset style="background-color: #FFFFFF;">
-		<h3>&nbsp; &nbsp; &nbsp; &nbsp; 
+		<h3>&nbsp; &nbsp; &nbsp; &nbsp;
 			<img src="http://www.crmotos.com/motocicletas/logo-crm.jpg" width="75">&nbsp; &nbsp; &nbsp; &nbsp; Contacte su Agencia &nbsp; &nbsp;  &nbsp; &nbsp;
 			<?php echo $this->Html->image("{$mm['Marca']['logo_file']}/{$mm['Marca']['logo']}", array('pathPrefix' => 'files/marca/logo/',"class"=>"img-polaroid","width"=>"75"));?>
-			</h3>		
+			</h3>
 <?php
 echo $this->Form->input('agencia_id', array('type'=>'hidden','value' => $_GET["agencia_id"]));
 echo $this->Form->input('modelos', array('type'=>'hidden'));
@@ -61,7 +63,7 @@ echo $this->Form->input('fuente', array('type'=>'hidden','value' => 'crmotos.com
   <li data-target="#myCarousel" data-slide-to="1"></li>
   <li data-target="#myCarousel" data-slide-to="2"></li>
 </ol>
-<div class="carousel-inner" style="min-height: 70px !important;">	
+<div class="carousel-inner" style="min-height: 70px !important;">
 <?php
 $i = 0;
 $ia = 0;
@@ -79,16 +81,16 @@ if($i==0){
 }
 ?>
 <div style="float:left;margin-left: 5px;">
-<span class="badge badge-important">	
+<span class="badge badge-important">
 <?php
-		if(count($m['ModeloPic'])){								
+		if(count($m['ModeloPic'])){
 ?>
 <?php echo $this->Html->image("{$m['ModeloPic'][0]['pic_file']}/{$m['ModeloPic'][0]['pic']}", array('pathPrefix' => 'files/modelo_pic/pic/',"class"=>"img-polaroid","width"=>"80px"));?>
 <?php
 		}else{
-			
+
 ?>
-<img id="previewModelPic" src="/img/motosil1.png" width="80" class='img-polaroid'/>	
+<img id="previewModelPic" src="/img/motosil1.png" width="80" class='img-polaroid'/>
 <?php
 		}
 ?>
@@ -139,21 +141,18 @@ echo $this->Form->input('direccion', array('label' => 'Dirección'));
 //echo $this->Form->input('distrito', array('label' => 'Distrito'));
 echo $this->Form->input('canton', array('label' => 'Ciudad'));
 echo $this->Form->input('provincia',array('label'=>'Seleccione la provincia','options' =>$this->App->opciones_provincias()));
-echo $this->Form->input('status', array('type'=>'hidden','value' => 1));								
-?>	
+echo $this->Form->input('status', array('type'=>'hidden','value' => 1));
+?>
 	</fieldset>
 <fieldset>
 		<h4 style="color:#9C1903;">Comentarios <i class="fa-icon-comment"></i></h4>
 <?php
 echo $this->Form->input('comentario', array('type'=>'textarea'));
-//echo $this->Form->input('fuente', array('options'=>$fuentes));								
-echo $this->Form->input('boletin', array('type'=>'hidden','value' => 1));								
+//echo $this->Form->input('fuente', array('options'=>$fuentes));
+echo $this->Form->input('boletin', array('type'=>'hidden','value' => 1));
 echo $this->Form->input('lat', array('type'=>'hidden','value' => 0));
 echo $this->Form->input('lon', array('type'=>'hidden','value' => 0));
-?>	
-	</fieldset>		
+?>
+	</fieldset>
 <?php echo $this->Form->end(array("class"=>"btn btn-danger","label"=>"Enviar")); ?>
 </div>
-
-
-
