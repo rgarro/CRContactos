@@ -31,7 +31,7 @@
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
-	Configure::write('debug', 0);
+	Configure::write('debug', 2);
 /**
  * Configure the Error handler used to handle errors for your application. By default
  * ErrorHandler::handleError() is used. It will display errors using Debugger, when debug > 0
@@ -109,7 +109,7 @@
 								"ayatola_blues",
 								"candy_kisses",
 								"i_love_you"));
-	Configure::write("Website.min_exception_length",3);							
+	Configure::write("Website.min_exception_length",3);
 /**
  * To configure CakePHP *not* to use mod_rewrite and to
  * use CakePHP pretty URLs, remove these .htaccess

@@ -1,6 +1,6 @@
 <!-- start: JavaScript-->
 		<script src="/js/jquery-1.9.1.min.js"></script>
-	<script src="/js/jquery-migrate-1.0.0.min.js"></script>	
+	<script src="/js/jquery-migrate-1.0.0.min.js"></script>
 		<script src="/js/jquery-ui-1.10.0.custom.min.js"></script>
 		<script src="/js/jquery.ui.touch-punch.js"></script>
 		<script src="/js/bootstrap.min.js"></script>
@@ -28,7 +28,7 @@
 		<script src="/js/jquery.sparkline.min.js"></script>
  <script src="/js/jquery.form.js"></script>
  <script src="/js/pace.min.js"></script>
- <script src="/js/jquery.route32.js"></script> 
+ <script src="/js/jquery.route32.js"></script>
 <script src="/js/custom.js"></script>
 <script src="/js/tipos.js"></script>
 <script src="/js/jquery.serialize-hash.js"></script>
@@ -36,6 +36,7 @@
 <script src="/js/reportes.js"></script>
 
 <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script src="/js/swfobject.js"></script>
 <script src="/js/handlebars.js"></script>
 <script src="/js/localidades.js"></script>
 <script src="/js/agencia.js"></script>
@@ -46,7 +47,7 @@
 <script src="/js/sa.js"></script>
 <script src="/js/cRc/UI/rotate-box.js"></script>
 		<script type="text/javascript">
-	
+
 	function message_welcome1(){
 		var unique_id = $.gritter.add({
 			// (string | mandatory) the heading of the notification
@@ -63,7 +64,7 @@
 			class_name: 'my-sticky-class'
 		});
 	}
-	
+
 	function message_welcome2(){
 		var unique_id = $.gritter.add({
 			// (string | mandatory) the heading of the notification
@@ -80,7 +81,7 @@
 			class_name: 'my-sticky-class'
 		});
 	}
-	
+
 	function message_welcome3(){
 		var unique_id = $.gritter.add({
 			// (string | mandatory) the heading of the notification
@@ -97,10 +98,10 @@
 			class_name: 'gritter-light'
 		});
 	}
-	
+
 	var no_is_loaded = true;
 	var total_leads_nuevos = -2;
-	
+
 	function obtener_total_leads_nuevos(){
 		$.ajax({
 			url:"/index.php/leads/obtener_total_leads_nuevos",
@@ -111,7 +112,7 @@
 						window.location = "/index.php/";
 					}
 				}
-				
+
 				if(no_is_loaded){
 					no_is_loaded = false;
 				}else{
@@ -124,13 +125,13 @@
 				$(".leads-nuevos-total").html(total_leads_nuevos);
 			},
 			dataType:'json'
-		});	
+		});
 	}
-	
-	
+
+
 	var no_is_loadedb = true;
 	var total_mis_leads = -2;
-	
+
 	function obtener_total_mis_leads(){
 		$.ajax({
 			url:"/index.php/leads/obtener_total_mis_leads",
@@ -141,7 +142,7 @@
 						window.location = "/index.php/";
 					}
 				}
-				
+
 				if(no_is_loadedb){
 					no_is_loadedb = false;
 				}else{
@@ -154,21 +155,21 @@
 				$(".leads-atendiendo-total").html(total_mis_leads);
 			},
 			dataType:'json'
-		});	
+		});
 	}
 
 	$(document).ready(function(){
 		$(".preloader").hide();
-				
+
 				$( document ).ajaxStart(function(){
 					$(".preloader").show();
 				});
-				
+
 				$( document ).ajaxStop(function(){
 					$(".preloader").hide();
 				});
 		//setTimeout("message_welcome1()",5000);
-		//setTimeout("message_welcome2()",10000);	
+		//setTimeout("message_welcome2()",10000);
 		//setTimeout("message_welcome3()",15000);
 <?php if($this->Session->read('is_administrador')){ ?>
 		obtener_total_leads_nuevos();
@@ -177,7 +178,7 @@
 <?php if($this->Session->read('is_vendedor')  || $this->Session->read('is_administrador') ){ ?>
 		obtener_total_mis_leads();
 		window.setInterval(obtener_total_mis_leads,60000);
-<?php } ?>		
-	});			
+<?php } ?>
+	});
 	</script>
 		<!-- end: JavaScript-->

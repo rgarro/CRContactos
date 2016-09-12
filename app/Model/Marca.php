@@ -10,7 +10,7 @@ class Marca extends AppModel {
  * Validation rules
  *
  * @var array
- */	
+ */
 
 	public $validate = array(
 		'nombre' => array(
@@ -38,7 +38,7 @@ class Marca extends AppModel {
         	)
     	)
 	);
-	
+
 	 public $actsAs = array(
         'Upload.Upload' => array(
             'logo' => array(
@@ -54,7 +54,7 @@ class Marca extends AppModel {
             )
         )
     );
-	
+
 	 public $hasMany = array(
         'Modelo' => array(
             'className' => 'Modelo'
