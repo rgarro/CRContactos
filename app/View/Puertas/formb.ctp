@@ -36,7 +36,7 @@ Uno de nuestros Ejecutivos de Venta lo estará contactando para brindarle mayor 
 if(isset($_SESSION["finale_data"])){
 	echo $_SESSION["finale_data"]['Formfinale']['content']."<br>";
 	?>
-<img class="img-polaroid" src="/app/webroot/files/formfinale/<?php echo $_SESSION["finale_data"]['Formfinale']['id'];?>/<?php echo $_SESSION["finale_data"]['Formfinale']['Filename'];?>" />
+<a href="<?php echo $_SESSION["finale_data"]['Formfinale']['target_url'];?>"><img class="img-polaroid" src="/app/webroot/files/formfinale/<?php echo $_SESSION["finale_data"]['Formfinale']['id'];?>/<?php echo $_SESSION["finale_data"]['Formfinale']['Filename'];?>" /></a>
 	<?php
 }
 }else{
