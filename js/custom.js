@@ -66,6 +66,9 @@ $(document).ready(function(){
 		router.add('#/Formfinales/',function(){
     	loadStage("/index.php/formfinales/index");
     });
+		router.add('#/Publicidad/',function(){
+    	loadStage("/index.php/publicidad/index");
+    });
     router.drive();
     //end routes
 

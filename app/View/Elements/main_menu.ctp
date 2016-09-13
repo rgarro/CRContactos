@@ -27,6 +27,9 @@
 								<a class="dropmenu" href="#"><i class="fa-icon-truck"></i><span class="hidden-tablet"> Manejo de Datos</span></a>
 							<ul class="nav nav-tabs nav-stacked main-menu">
 								<li>
+									<a class="submenu" href="#/Publicidad/"><i class="fa fa-photo"></i> <span class="hidden-tablet"> Publicidad</span></a>
+								</li>
+								<li>
 									<a class="submenu" href="#/Formfinales/"><i class="fa fa-camera"></i> <span class="hidden-tablet"> Finales Form</span></a>
 								</li>
 							<li>
