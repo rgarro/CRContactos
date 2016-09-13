@@ -298,7 +298,7 @@ class Lead extends AppModel {
 		}
 		$this->data['Lead']['cambio'] = date("Y-m-d H:i:s");
 		/* begin send email to customer */
-		$new_email = new CakeEmail()
+		$new_email = new CakeEmail();
 		$new_email->viewVars(array('pics'=>$pics,'data'=>$this->data['Lead'],'msg' => $msg,'title'=>$title));
 		$new_email->template('nuevo_notificacion_cliente','crmotos')
 		->from(array('notificaciones@crmotos.com' => 'Notificaciones CRMotos'))
