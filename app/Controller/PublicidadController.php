@@ -39,7 +39,9 @@ class PublicidadController extends AppController {
 
   public function lista(){
     $this->layout = "ajax";
-    $this->set('data',$this->Publicidad->find('all'));
+    $total = $this->Publicidad->find('count');
+    $data = array('total'=>$total,'data'=>$this->Publicidad->find('all',array("limit"=>$_GET['limit'],'offset'=>$_GET['offset'])));
+    $this->set('data',$data);
     $this->render("/General/serialize_json");
   }
 
