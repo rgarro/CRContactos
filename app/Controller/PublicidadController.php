@@ -37,6 +37,15 @@ class PublicidadController extends AppController {
     $this->render("/General/serialize_json");
   }
 
+  public function bylabel(){
+    $this->layout = "ajax";
+    $params = array("conditions"=>array("Publicidad.label"=>$_GET['label']));
+    $total = $this->Publicidad->find('count',$params);
+    $data = array('total'=>$total,'data'=>$this->Publicidad->find('first',$params));
+    $this->set('data',$data);
+    $this->render("/General/serialize_json");
+  }
+
   public function lista(){
     $this->layout = "ajax";
     $total = $this->Publicidad->find('count');

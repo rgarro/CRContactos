@@ -8,6 +8,7 @@
  //App::uses('CrcController', 'Controller');
  App::uses('AppController', 'Controller');
  App::uses('Formfinale', 'Model');
+ App::uses('Publifine', 'Model');
 class FormfinalesController extends AppController {
 
 	/*public function beforeFilter(){
@@ -15,6 +16,8 @@ class FormfinalesController extends AppController {
 			//$this->allow_only_sa();
 		//$this->Security->unlockedActions = array('modelos_select','agregar_seguimiento','agregar_lead_directamente');
 	}*/
+
+  public  $uses = array("Formfinale","Publifine");
 
 	public function index(){
 		$this->layout = "ajax";
@@ -41,6 +44,25 @@ class FormfinalesController extends AppController {
     $this->layout = "ajax";
     $total = $this->Formfinale->find('count');
     $data = array('total'=>$total,'data'=>$this->Formfinale->find('all',array("limit"=>$_GET['limit'],'offset'=>$_GET['offset'])));
+    $this->set('data',$data);
+    $this->render("/General/serialize_json");
+  }
+
+  public function addpfin(){
+    $this->layout = "ajax";
+    $this->Publifine->create();
+    $data = array("Publifine"=>array('formfinale_id'=>$_GET['formfinale_id'],'publicidad_id'=>$_GET['publicidad_id']));
+    $this->Publifine->save($data);
+
+    $this->set('data',array("is_success"=>1,"flash"=>__('The Publifine has been saved.')));
+    $this->render("/General/serialize_json");
+  }
+
+  public function listafine(){
+    $this->layout = "ajax";
+    $params = array('conditions'=>array('Publifine.formfinale_id'=>$_GET['finale_id']));
+    $total = $this->Publifine->find('count',$params);
+    $data = array('total'=>$total,'data'=>$this->Publifine->find('all',$params));
     $this->set('data',$data);
     $this->render("/General/serialize_json");
   }
