@@ -39,7 +39,9 @@ class FormfinalesController extends AppController {
 
   public function lista(){
     $this->layout = "ajax";
-    $this->set('data',$this->Formfinale->find('all'));
+    $total = $this->Formfinale->find('count');
+    $data = array('total'=>$total,'data'=>$this->Formfinale->find('all',array("limit"=>$_GET['limit'],'offset'=>$_GET['offset'])));
+    $this->set('data',$data);
     $this->render("/General/serialize_json");
   }
 
