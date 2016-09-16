@@ -67,6 +67,18 @@ class FormfinalesController extends AppController {
     $this->render("/General/serialize_json");
   }
 
+public function borrafine(){
+  //$this->allow_only_sa();
+  $this->layout = "ajax";
+  $this->Publifine->id = $_GET['id'];
+  $data = $this->Publifine->findById($_GET['id']);
+  $this->Publifine->delete();
+  $this->set('data', $data);
+  $this->render("/General/serialize_json");
+
+}
+
+
   public function borrar(){
     //$this->allow_only_sa();
     $this->layout = "ajax";
