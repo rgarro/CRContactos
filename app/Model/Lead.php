@@ -254,6 +254,19 @@ class Lead extends AppModel {
             		$this->data['Lead']['lon'] = -84.1133451;
 					$this->data['Lead']['ip_origen'] = "127.0.0.1";
 				}
+
+				/* begin send email to customer */
+				$new_email = new CakeEmail();
+				$new_email->viewVars(array('pics'=>$pics,'data'=>$this->data['Lead'],'msg' => $msg,'title'=>$title));
+				$new_email->template('nuevo_notificacion_cliente','crmotos');
+				$new_email->from(array('notificaciones@crmotos.com' => 'Notificaciones CRMotos'));
+				$new_email->replyTo($this->data['Lead']['email']);
+				$new_email->subject($title);
+				$new_email->emailFormat('html');
+				$new_email->to($this->data['Lead']['email']);
+				$new_email->send();
+			/* end send email to customer  */
+
 			}
 
 
@@ -297,17 +310,7 @@ class Lead extends AppModel {
 
 		}
 		$this->data['Lead']['cambio'] = date("Y-m-d H:i:s");
-		/* begin send email to customer */
-		$new_email = new CakeEmail();
-		$new_email->viewVars(array('pics'=>$pics,'data'=>$this->data['Lead'],'msg' => $msg,'title'=>$title));
-		$new_email->template('nuevo_notificacion_cliente','crmotos')
-		->from(array('notificaciones@crmotos.com' => 'Notificaciones CRMotos'))
-		->replyTo($this->data['Lead']['email'])
-		->subject($title)
-		->emailFormat('html')
-		->to($this->data['Lead']['email'])
-		->send();
-;		/* end send email to customer  */
+
 		return true;
 	}
 

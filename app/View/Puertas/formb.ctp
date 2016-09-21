@@ -28,16 +28,25 @@ if(isset($_SESSION["lead_set"]) && $_SESSION["lead_set"]==1){
     //$this->Session->write("lead_set",0);
     $_SESSION["lead_set"] = 0;
 ?>
-    <h4 style="color:#9C1903;"><i class="fa-icon-trophy"></i> Gracias por enviarnos su solicitud de Información.
+    <h4 style="color:#9C1903;">Gracias por enviarnos su solicitud de Información.
 <br>
 Uno de nuestros Ejecutivos de Venta lo estará contactando para brindarle mayor información y toda la ayuda que usted necesite.</h4>
 <br>
+<center>
 <?php
 if(isset($_SESSION["finale_data"])){
+
 	echo $_SESSION["finale_data"]['Formfinale']['content']."<br>";
 	?>
 <a href="<?php echo $_SESSION["finale_data"]['Formfinale']['target_url'];?>"><img class="img-polaroid" src="/app/webroot/files/formfinale/<?php echo $_SESSION["finale_data"]['Formfinale']['id'];?>/<?php echo $_SESSION["finale_data"]['Formfinale']['Filename'];?>" /></a>
-	<?php
+<?php
+foreach($_SESSION["finale_data"]['Publifine'] as $p){
+	print_r($p);
+	echo "asdfasdf";
+}
+?>
+</center>
+<?php
 }
 }else{
 ?>

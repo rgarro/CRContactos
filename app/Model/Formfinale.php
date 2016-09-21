@@ -64,6 +64,12 @@ class Formfinale extends AppModel {
 		)
 	);
 
+	public $hasMany = array(
+        'Publifine' => array(
+            'className' => 'Publifine',
+        )
+    );
+
 	public $actsAs = array(
         'Upload.Upload' => array(
             'Filename' => array(

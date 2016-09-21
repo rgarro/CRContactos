@@ -49,7 +49,8 @@ class PuertasController extends CrcController {
 		if(isset($_GET['finale_label'])){
 			$optf = array("conditions"=>array("label"=>$_GET['finale_label']));
 			if($this->Formfinale->find('count',$opt)){
-				$finale_data = $this->Formfinale->findByLabel($_GET['finale_label']);
+				//$finale_data = $this->Formfinale->findByLabel($_GET['finale_label']);
+				$finale_data = $this->Formfinale->find("first",array("conditions"=>array("Formfinale.label"=>$_GET['finale_label']),'recursive'=>3));
 				$_SESSION['finale_data'] = $finale_data;
 			}
 		}
