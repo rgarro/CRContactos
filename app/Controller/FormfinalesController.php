@@ -9,6 +9,7 @@
  App::uses('AppController', 'Controller');
  App::uses('Formfinale', 'Model');
  App::uses('Publifine', 'Model');
+  App::uses('Publicidad', 'Model');
 class FormfinalesController extends AppController {
 
 	/*public function beforeFilter(){
@@ -17,7 +18,7 @@ class FormfinalesController extends AppController {
 		//$this->Security->unlockedActions = array('modelos_select','agregar_seguimiento','agregar_lead_directamente');
 	}*/
 
-  public  $uses = array("Formfinale","Publifine");
+  public  $uses = array("Formfinale","Publifine","Publicidad");
 
 	public function index(){
 		$this->layout = "ajax";
@@ -51,7 +52,7 @@ class FormfinalesController extends AppController {
   public function addpfin(){
     $this->layout = "ajax";
     $this->Publifine->create();
-    $data = array("Publifine"=>array('formfinale_id'=>$_GET['formfinale_id'],'publicidad_id'=>$_GET['publicidad_id']));
+    $data = array("Publifine"=>array('formfinale_id'=>$_GET['formfinale_id'],'publicidad_id'=>$_GET['publicidad_id'],'sortnum'=>$_GET['sortnum']));
     $this->Publifine->save($data);
 
     $this->set('data',array("is_success"=>1,"flash"=>__('The Publifine has been saved.')));
@@ -60,7 +61,7 @@ class FormfinalesController extends AppController {
 
   public function listafine(){
     $this->layout = "ajax";
-    $params = array('conditions'=>array('Publifine.formfinale_id'=>$_GET['finale_id']));
+    $params = array('conditions'=>array('Publifine.formfinale_id'=>$_GET['finale_id']),'order'=>'Publifine.sortnum ASC');
     $total = $this->Publifine->find('count',$params);
     $data = array('total'=>$total,'data'=>$this->Publifine->find('all',$params));
     $this->set('data',$data);
@@ -78,6 +79,16 @@ public function borrafine(){
 
 }
 
+public function updatesort(){
+  //$this->allow_only_sa();
+  $this->layout = "ajax";
+  $this->Publifine->id = $_GET['id'];
+  $data = array("Publifine"=>array("id"=>$_GET['id'],"sortnum"=>$_GET["sortnum"]));
+  $this->Publifine->save($data);
+  $this->set('data', $data);
+  $this->render("/General/serialize_json");
+
+}
 
   public function borrar(){
     //$this->allow_only_sa();
