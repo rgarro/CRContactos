@@ -47,13 +47,17 @@ foreach($_SESSION["finale_banners"] as $p){
 ?>
 </center>
 <?php
+}else{
+	?>
+	<h4 style="color:#9C1903;">Gracias por enviarnos su solicitud de Información.
+	<br>
+	Uno de nuestros Ejecutivos de Venta lo estará contactando para brindarle mayor información y toda la ayuda que usted necesite.</h4>
+	<br>
+	<?php
 }
 }else{
 ?>
-<h4 style="color:#9C1903;">Gracias por enviarnos su solicitud de Información.
-<br>
-Uno de nuestros Ejecutivos de Venta lo estará contactando para brindarle mayor información y toda la ayuda que usted necesite.</h4>
-<br>
+
 <?php
 foreach($modelos_agencia as $m){
 	if($m['Marca']['id'] == $_GET['marca_id']){
