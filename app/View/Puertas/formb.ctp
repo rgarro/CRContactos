@@ -28,21 +28,21 @@ if(isset($_SESSION["lead_set"]) && $_SESSION["lead_set"]==1){
     //$this->Session->write("lead_set",0);
     $_SESSION["lead_set"] = 0;
 ?>
-    <h4 style="color:#9C1903;">Gracias por enviarnos su solicitud de Información.
-<br>
-Uno de nuestros Ejecutivos de Venta lo estará contactando para brindarle mayor información y toda la ayuda que usted necesite.</h4>
-<br>
 <center>
 <?php
 if(isset($_SESSION["finale_data"])){
 
 	echo $_SESSION["finale_data"]['Formfinale']['content']."<br>";
 	?>
-<a href="<?php echo $_SESSION["finale_data"]['Formfinale']['target_url'];?>"><img class="img-polaroid" src="/app/webroot/files/formfinale/<?php echo $_SESSION["finale_data"]['Formfinale']['id'];?>/<?php echo $_SESSION["finale_data"]['Formfinale']['Filename'];?>" /></a>
+<a href="<?php echo $_SESSION["finale_data"]['Formfinale']['target_url'];?>" target="_blank"><img class="img-polaroid" src="/app/webroot/files/formfinale/<?php echo $_SESSION["finale_data"]['Formfinale']['id'];?>/<?php echo $_SESSION["finale_data"]['Formfinale']['Filename'];?>" /></a>
+<br>
+<br>
 <?php
-foreach($_SESSION["finale_data"]['Publifine'] as $p){
-	print_r($p);
-	echo "asdfasdf";
+foreach($_SESSION["finale_banners"] as $p){
+?>
+<a href="<?php echo $p["Publicidad"]['target_url'];?>" target="_blank"><img class="img-polaroid" src="/app/webroot/files/publicidad/<?php echo $p["Publicidad"]['id'];?>/<?php echo $p["Publicidad"]['Filename'];?>" /></a><br>
+
+<?php
 }
 ?>
 </center>
@@ -50,6 +50,10 @@ foreach($_SESSION["finale_data"]['Publifine'] as $p){
 }
 }else{
 ?>
+<h4 style="color:#9C1903;">Gracias por enviarnos su solicitud de Información.
+<br>
+Uno de nuestros Ejecutivos de Venta lo estará contactando para brindarle mayor información y toda la ayuda que usted necesite.</h4>
+<br>
 <?php
 foreach($modelos_agencia as $m){
 	if($m['Marca']['id'] == $_GET['marca_id']){

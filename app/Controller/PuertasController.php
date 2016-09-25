@@ -27,7 +27,7 @@ class PuertasController extends CrcController {
  *
  * @var array
  */
-	public $uses = array("Formfinale","Fuente","Lead","ModeloAgencia","Agencia","ModeloPic","MarcaAgencia");
+	public $uses = array("Publicidad","Formfinale","Fuente","Lead","ModeloAgencia","Agencia","ModeloPic","MarcaAgencia");
 
 	public $layout ="public";
 
@@ -50,7 +50,14 @@ class PuertasController extends CrcController {
 			$optf = array("conditions"=>array("label"=>$_GET['finale_label']));
 			if($this->Formfinale->find('count',$opt)){
 				//$finale_data = $this->Formfinale->findByLabel($_GET['finale_label']);
-				$finale_data = $this->Formfinale->find("first",array("conditions"=>array("Formfinale.label"=>$_GET['finale_label']),'recursive'=>3));
+				$finale_data = $this->Formfinale->find("first",array("conditions"=>array("Formfinale.label"=>$_GET['finale_label'])));
+				$banners = array();
+				foreach($finale_data['Publifine'] as $f){
+					$d = $this->Publicidad->findById($f['publicidad_id']);
+					array_push($banners,$d);
+				}
+
+				$_SESSION['finale_banners'] = $banners;
 				$_SESSION['finale_data'] = $finale_data;
 			}
 		}

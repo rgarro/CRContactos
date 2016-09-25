@@ -67,6 +67,7 @@ class Formfinale extends AppModel {
 	public $hasMany = array(
         'Publifine' => array(
             'className' => 'Publifine',
+						'order'=>'Publifine.sortnum ASC'
         )
     );
 
