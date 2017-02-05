@@ -1,10 +1,10 @@
 /**
  * Reportes CRContactos
- * 
+ *
  * @author Rolando <rgarro@gmail.com>
  * @uses JQuery
  * @uses JQueryHash
- * 
+ *
  */
 
 var Reportes = {
@@ -19,7 +19,7 @@ var Reportes = {
 	'init':function(){
 		$(Reportes.opt.desde).datepicker({dateFormat:'yy-mm-dd'});
 		$(Reportes.opt.hasta).datepicker({dateFormat:'yy-mm-dd'});
-		
+
 		$(Reportes.opt.reportsForm).on("submit",function(){
 			$.ajax({
 				url:Reportes.opt.reporteUrl,
@@ -29,9 +29,9 @@ var Reportes = {
 					CRContactos_Manager.check_errors(data);
 					$(Reportes.opt.reportContainer).html(data);
 				}
-			});			
+			});
 			return false;
 		});
-		
+
 	}
 };
