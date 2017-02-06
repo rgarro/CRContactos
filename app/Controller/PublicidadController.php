@@ -70,8 +70,7 @@ class PublicidadController extends AppController {
   public function publicitybylabels(){
 	  $this->response->header('Access-Control-Allow-Origin', '*');
 	  $this->layout = "ajax";
-print_r($_GET);
-exit;
+	  $this->set('data',$this->Publicidad->find('all',array("conditions"=>array("Publicidad.label IN('".str_replace(",","','",$_GET['labels'])."')"))));
   }
 
 }

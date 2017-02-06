@@ -25,6 +25,6 @@ colorMounter.prototype.loadPublicityByLabels = function(labels){
 			}
 		});
 	}else{
-		throw new Error("Labels must be an array of string");
+		throw new Error("Labels must be an array of string ... ");
 	}
 }

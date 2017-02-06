@@ -1,3 +1,4 @@
+
 <script>
 	$(document).ready(function(){
 		//Examples of how to assign the Colorbox event to elements
@@ -6,7 +7,11 @@
 	});
 </script>
 <div style="display: none;">
-	<p><a class="publicontacto" href="http://static.plenummedia.com/40731/images/20140610153233-banamex-1-web.jpg" title="Banner title">Banamex 1</a></p>
-	<p><a class="publicontacto" href="http://www.micartago.com/files.php?file=pic16257_656734243.jpg" title="banner title">Bancredito 2</a></p>
-	<p><a class="publicontacto" href="http://static.plenummedia.com/40731/images/20140610153233-banamex-1-web.jpg" title="banner title">Credit Card</a></p>
+	<?php
+	foreach($data as $d){
+	?>
+	<p><a class="publicontacto" href="http://crcontactos.com/app/webroot/files/publicidad/<?php echo $d['Publicidad']['id']; ?>/<?php echo $d['Publicidad']['Filename']; ?>" title="<?php echo $d['Publicidad']['label']; ?>" target_url="<?php echo $d['Publicidad']['target_url']; ?>"><?php echo $d['Publicidad']['label']; ?></a></p>
+	<?php
+	}
+	?>
 </div>
