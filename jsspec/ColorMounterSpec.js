@@ -2,7 +2,7 @@ describe("colorMounter",function(){
 	var cM;
 
 	beforeAll(function(){
-		cM = new ColorMounter(['sdf','asdf']);
+		cM = new colorMounter();
 	});
 
 	it("validates labels is array",function(){
