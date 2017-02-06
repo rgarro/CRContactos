@@ -67,4 +67,11 @@ class PublicidadController extends AppController {
     $this->render("/General/serialize_json");
   }
 
+  public function publicitybylabels(){
+	  $this->response->header('Access-Control-Allow-Origin', '*');
+	  $this->layout = "ajax";
+print_r($_GET);
+exit;
+  }
+
 }
