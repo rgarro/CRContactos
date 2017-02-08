@@ -67,6 +67,7 @@ class PuertasController extends CrcController {
 		$opt = array("conditions"=>array("id"=>$_GET['agencia_id']));
 		if($this->Agencia->find('count',$opt)){
 			if ($this->request->is('post')) {
+print_r($this->request->data['Lead']);				
 				$this->Lead->create();
 				if ($this->Lead->save($this->request->data['Lead'])) {
 					//$this->Session->setFlash('Gracias!! Pronto le contactaremos.', 'alert', array('plugin' => 'BoostCake','class' => 'alert-error'));
