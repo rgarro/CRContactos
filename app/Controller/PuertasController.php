@@ -48,7 +48,7 @@ class PuertasController extends CrcController {
 		/* begin finale block */
 		if(isset($_GET['finale_label'])){
 			$optf = array("conditions"=>array("label"=>$_GET['finale_label']));
-			if($this->Formfinale->find('count',$opt)){
+			if($this->Formfinale->find('count',$optf)){
 				//$finale_data = $this->Formfinale->findByLabel($_GET['finale_label']);
 				$finale_data = $this->Formfinale->find("first",array("conditions"=>array("Formfinale.label"=>$_GET['finale_label'])));
 				$banners = array();

@@ -1,10 +1,12 @@
 /**
- * Created by rolando on 2/5/17.
+ * ColorBox crcontactos ajax mounter
+ *
+ * @author Rolando <rolando@emptyart.xyz>
  */
 function colorMounter(){
 	this.l = [];
-	//this.url = "http://localhost:2001/index.php/publicidad/publicitybylabels";
-	this.url = "http://crcontactos.com/index.php/publicidad/publicitybylabels";
+	this.url = "http://localhost:2001/index.php/publicidad/publicitybylabels";
+	//this.url = "http://crcontactos.com/index.php/publicidad/publicitybylabels";
 }
 
 colorMounter.prototype.isArrayOfLabels = function(labels){

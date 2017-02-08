@@ -10,7 +10,7 @@
 	<?php
 	foreach($data as $d){
 	?>
-	<p><a class="publicontacto" href="http://crcontactos.com/app/webroot/files/publicidad/<?php echo $d['Publicidad']['id']; ?>/<?php echo $d['Publicidad']['Filename']; ?>" title="<?php echo $d['Publicidad']['label']; ?>" target_url="<?php echo $d['Publicidad']['target_url']; ?>"><?php echo $d['Publicidad']['label']; ?></a></p>
+	<p><a class="publicontacto" href="http://localhost:2001/app/webroot/files/publicidad/<?php echo $d['Publicidad']['id']; ?>/<?php echo $d['Publicidad']['Filename']; ?>" title="<?php echo $d['Publicidad']['label']; ?>" target_url="<?php echo $d['Publicidad']['target_url']; ?>"><?php echo $d['Publicidad']['label']; ?></a></p>
 	<?php
 	}
 	?>
