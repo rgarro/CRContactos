@@ -48,8 +48,8 @@
 			slideshow: false,
 			slideshowAuto: true,
 			slideshowSpeed: 2500,
-			slideshowStart: "start slideshow",
-			slideshowStop: "stop slideshow",
+			slideshowStart: "iniciar",
+			slideshowStop: "detener",
 			photoRegex: /\.(gif|png|jp(e|g|eg)|bmp|ico|webp|jxr|svg)((#|\?).*)?$/i,
 
 			// alternate image paths for high-res displays
