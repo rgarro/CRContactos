@@ -43,16 +43,7 @@ class Formfinale extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'content' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),'name' => array(
+	'name' => array(
 			'rule1' => array(
             	'rule' => array('isValidExtension', array('jpg', 'png', 'gif')),
         		'message' => 'Archivo debe ser una imagen png, jpg or gif'
