@@ -11,7 +11,7 @@ App::uses('CrcController', 'Controller');
 
 class AgenciasController extends CrcController {
 
-	public $uses = array('ModeloPic','Notificacione','Marca','ModeloAgencia','MarcaAgencia','Administradore','User','Agencia','Vendedore','LeadSeguidore');
+	public $uses = array('Formfinale','ModeloPic','Notificacione','Marca','ModeloAgencia','MarcaAgencia','Administradore','User','Agencia','Vendedore','LeadSeguidore');
 
 	public function cambiar_user_status(){
 		$this->allow_sa_and_admin();
@@ -20,7 +20,7 @@ class AgenciasController extends CrcController {
 		$this->User->query("UPDATE users SET active='".$_GET['active']."' WHERE id='".$_GET['user_id']."'");
 		$data = array("is_success"=>1);
 		$this->set('data', $data);
-		$this->render("/General/serialize_json");	
+		$this->render("/General/serialize_json");
 	}
 
 	public function vendedores(){
@@ -30,13 +30,13 @@ class AgenciasController extends CrcController {
 		$opt = array('conditions' => array('agencia_id' => $this->Session->read('agencia_id')));
 		$this->set('vendedores', $this->Vendedore->find('all',$opt));
 	}
-	
+
 	public function administradores(){
 		$this->allow_sa_and_admin();
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
 		$opt = array('conditions' => array('agencia_id' => $this->Session->read('agencia_id')));
-		$this->set('administradores', $this->Administradore->find('all',$opt));	
+		$this->set('administradores', $this->Administradore->find('all',$opt));
 	}
 
 	public function remover_notificacion(){
@@ -46,7 +46,7 @@ class AgenciasController extends CrcController {
 		$this->Notificacione->delete($_GET['nid']);
 		$data = array("is_success"=>1);
 		$this->set('data', $data);
-		$this->render("/General/serialize_json");	
+		$this->render("/General/serialize_json");
 	}
 
 	public function delete_user(){
@@ -63,7 +63,7 @@ class AgenciasController extends CrcController {
 		$this->User->query("DELETE FROM users WHERE id='".$_GET['user_id']."'");
 		$data = array("is_success"=>1);
 		$this->set('data', $data);
-		$this->render("/General/serialize_json");	
+		$this->render("/General/serialize_json");
 	}
 
 	public function notificaciones(){
@@ -107,7 +107,7 @@ class AgenciasController extends CrcController {
 		$this->ModeloAgencia->delete($_GET['maid']);
 		$data = array("is_success"=>1);
 		$this->set('data', $data);
-		$this->render("/General/serialize_json");	
+		$this->render("/General/serialize_json");
 	}
 
 	public function asignar_modelo(){
@@ -116,7 +116,7 @@ class AgenciasController extends CrcController {
 		$this->layout = "ajax";
 		$opt = array("conditions"=>array("agencia_id"=>$this->Session->read('agencia_id'),"modelo_id"=>$_GET['modelo_id']));
 		if($this->ModeloAgencia->find('count',$opt) < 1){
-			$ma = array("ModeloAgencia"=>array("agencia_id"=>$this->Session->read('agencia_id'),"modelo_id"=>$_GET['modelo_id']));	
+			$ma = array("ModeloAgencia"=>array("agencia_id"=>$this->Session->read('agencia_id'),"modelo_id"=>$_GET['modelo_id']));
 			$this->ModeloAgencia->create();
 			$this->ModeloAgencia->save($ma);
 			$data = array("is_success"=>1);
@@ -124,7 +124,7 @@ class AgenciasController extends CrcController {
 			$data = array("is_error"=>1,"error_msg"=>"Este Modelo ya esta asignado.");
 		}
 		$this->set('data', $data);
-		$this->render("/General/serialize_json");	
+		$this->render("/General/serialize_json");
 	}
 
 	public function modelos_agencia(){
@@ -149,7 +149,7 @@ class AgenciasController extends CrcController {
 		$this->MarcaAgencia->delete($_GET['mid']);
 		$data = array("is_success"=>1);
 		$this->set('data', $data);
-		$this->render("/General/serialize_json");		
+		$this->render("/General/serialize_json");
 	}
 
 	public function asignar_marcas(){
@@ -157,15 +157,15 @@ class AgenciasController extends CrcController {
 		$this->layout = "ajax";
 		$opt = array("conditions"=>array("agencia_id"=>$_GET['agencia_id'],"marca_id"=>$_GET['marca_id']));
 		if($this->MarcaAgencia->find('count',$opt) < 1){
-			$ma = array("MarcaAgencia"=>array("agencia_id"=>$_GET['agencia_id'],"marca_id"=>$_GET['marca_id']));	
+			$ma = array("MarcaAgencia"=>array("agencia_id"=>$_GET['agencia_id'],"marca_id"=>$_GET['marca_id']));
 			$this->MarcaAgencia->create();
 			$this->MarcaAgencia->save($ma);
-			$data = array("is_success"=>1);	
+			$data = array("is_success"=>1);
 		}else{
-			$data = array("is_error"=>1,"error_msg"=>"Esta Marca ya esta asignada.");	
+			$data = array("is_error"=>1,"error_msg"=>"Esta Marca ya esta asignada.");
 		}
 		$this->set('data', $data);
-		$this->render("/General/serialize_json");	
+		$this->render("/General/serialize_json");
 	}
 
 	public function marcas_agencia($id){
@@ -177,18 +177,18 @@ class AgenciasController extends CrcController {
 		$opt = array("conditions"=>array("agencia_id"=>$id),"recursive"=>3);
 		$mage = $this->MarcaAgencia->find('all',$opt);
 		for($i=0;$i<count($mage);$i++){
-		$mage[$i]['agmodels'] = $this->Marca->query("SELECT m.* FROM modelos as m, modelo_agencias as mg WHERE m.id = mg.modelo_id AND mg.agencia_id='".$mage[$i]['MarcaAgencia']['agencia_id']."' AND m.marca_id='".$mage[$i]['MarcaAgencia']['marca_id']."'");	
+		$mage[$i]['agmodels'] = $this->Marca->query("SELECT m.* FROM modelos as m, modelo_agencias as mg WHERE m.id = mg.modelo_id AND mg.agencia_id='".$mage[$i]['MarcaAgencia']['agencia_id']."' AND m.marca_id='".$mage[$i]['MarcaAgencia']['marca_id']."'");
 			if(count($mage[$i]['agmodels'])){
-				$x = 0;	
-				foreach($mage[$i]['agmodels'] as $mod){					
-$mage[$i]['agmodels'][$x]['pics'] =	$this->ModeloPic->findAllByModeloId($mod['m']['id'],array('*'),array('ModeloPic.id desc'));//('all',array("conditiond"=>array("ModeloPic.modelo_id"=>$mod['m']['id'])));		
+				$x = 0;
+				foreach($mage[$i]['agmodels'] as $mod){
+$mage[$i]['agmodels'][$x]['pics'] =	$this->ModeloPic->findAllByModeloId($mod['m']['id'],array('*'),array('ModeloPic.id desc'));//('all',array("conditiond"=>array("ModeloPic.modelo_id"=>$mod['m']['id'])));
 				$x++;
-				}			
+				}
 			}
 		}
 		$this->set("marcas",$mage);
 	}
-	
+
 	public function modelos_box(){
 		$this->allow_sa_and_admin();
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
@@ -199,17 +199,18 @@ $mage[$i]['agmodels'][$x]['pics'] =	$this->ModeloPic->findAllByModeloId($mod['m'
 		}
 		$opt = array("conditions"=>array("agencia_id"=>$id),"recursive"=>3);
 		$mage = $this->MarcaAgencia->find('all',$opt);
-		
+
 		for($i=0;$i<count($mage);$i++){
-		$mage[$i]['agmodels'] = $this->Marca->query("SELECT m.* FROM modelos as m, modelo_agencias as mg WHERE m.id = mg.modelo_id AND mg.agencia_id='".$mage[$i]['MarcaAgencia']['agencia_id']."' AND m.marca_id='".$mage[$i]['MarcaAgencia']['marca_id']."'");	
+		$mage[$i]['agmodels'] = $this->Marca->query("SELECT m.* FROM modelos as m, modelo_agencias as mg WHERE m.id = mg.modelo_id AND mg.agencia_id='".$mage[$i]['MarcaAgencia']['agencia_id']."' AND m.marca_id='".$mage[$i]['MarcaAgencia']['marca_id']."'");
 			if(count($mage[$i]['agmodels'])){
-				$x = 0;	
-				foreach($mage[$i]['agmodels'] as $mod){					
-$mage[$i]['agmodels'][$x]['pics'] =	$this->ModeloPic->findAllByModeloId($mod['m']['id'],array('*'),array('ModeloPic.id desc'));//('all',array("conditiond"=>array("ModeloPic.modelo_id"=>$mod['m']['id'])));		
+				$x = 0;
+				foreach($mage[$i]['agmodels'] as $mod){
+$mage[$i]['agmodels'][$x]['pics'] =	$this->ModeloPic->findAllByModeloId($mod['m']['id'],array('*'),array('ModeloPic.id desc'));//('all',array("conditiond"=>array("ModeloPic.modelo_id"=>$mod['m']['id'])));
 				$x++;
-				}			
+				}
 			}
 		}
+		$this->set("finales",$this->Formfinale->find('all'));
 		$this->set("marcas",$mage);
 	}
 
@@ -226,7 +227,7 @@ $mage[$i]['agmodels'][$x]['pics'] =	$this->ModeloPic->findAllByModeloId($mod['m'
 
 public function mapa() {
 		$this->Agencia->recursive = 0;
-		
+
 		$this->set('agencias', $this->Agencia->find('all'));
 		//$this->set('lat', $lat);
 		//$this->set('lon', $lon);
@@ -260,18 +261,18 @@ public function mapa() {
 		$options = array('conditions' => array('Agencia.' . $this->Agencia->primaryKey => $id));
 		$data = $this->Agencia->find('first', $options);
 		$_SESSION['agencia_nombre'] = $data['Agencia']['nombre'];
-		$this->set('agencia', $data);		
+		$this->set('agencia', $data);
 		$opt = array('conditions' => array('agencia_id' => $id));
-		
+
 		$this->set('administradores', $this->Administradore->find('all',$opt));
 		$this->set('vendedores', $this->Vendedore->find('all',$opt));
 	}
- 
- 
+
+
 	public function view($id = null) {
 		$this->_filter_employees_only($id);
 		return $this->redirect('/#/Agencia/');
-		
+
 	}
 
 /**
@@ -283,17 +284,17 @@ public function mapa() {
 		$this->allow_only_sa();
 		if ($this->request->is('post')) {
 			$this->Agencia->create();
-			
 
-			
+
+
 			if ($this->Agencia->save($this->request->data)) {
 				$this->Session->setFlash(__('The agencia has been saved.'), 'alert', array('plugin' => 'BoostCake','class' => 'alert-error'));
 				//return $this->redirect(array('action' => 'index'));
 				return $this->redirect('/#/Agencias/');
 			} else {
-							
 
-			
+
+
 				$this->Session->setFlash(__('The agencia could not be saved. Please, try again.'), 'alert', array(
 	'plugin' => 'BoostCake',
 	'class' => 'alert-error'
@@ -304,7 +305,7 @@ public function mapa() {
 	}
 
 
-	
+
 
 /**
  * edit method
@@ -316,7 +317,7 @@ public function mapa() {
 	public function edit($id = null) {
 		$this->allow_sa_and_admin();
 		$this->_filter_employees_only($id);
-		
+
 		if (!$this->Agencia->exists($id)) {
 			throw new NotFoundException(__('Invalid agencia'));
 		}

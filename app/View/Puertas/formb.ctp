@@ -29,6 +29,14 @@ if(isset($_SESSION["lead_set"]) && $_SESSION["lead_set"]==1){
     $_SESSION["lead_set"] = 0;
 ?>
 <center>
+	<?php
+	list($fb1, $fb2) = array_chunk($_SESSION["finale_banners"], ceil(count($_SESSION["finale_banners"]) / 2));
+	foreach($fb1 as $p){
+	?>
+	<a href="<?php echo $p["Publicidad"]['target_url'];?>" target="_blank"><img class="img-polaroid" src="/app/webroot/files/publicidad/<?php echo $p["Publicidad"]['id'];?>/<?php echo $p["Publicidad"]['Filename'];?>" /></a><br>
+	<?php
+	}
+	?>
 <?php
 if(isset($_SESSION["finale_data"])){
 
@@ -38,7 +46,7 @@ if(isset($_SESSION["finale_data"])){
 <br>
 <br>
 <?php
-foreach($_SESSION["finale_banners"] as $p){
+foreach($fb2 as $p){
 ?>
 <a href="<?php echo $p["Publicidad"]['target_url'];?>" target="_blank"><img class="img-polaroid" src="/app/webroot/files/publicidad/<?php echo $p["Publicidad"]['id'];?>/<?php echo $p["Publicidad"]['Filename'];?>" /></a><br>
 
