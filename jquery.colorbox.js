@@ -83,6 +83,10 @@
 				// using this.href would give the absolute url, when the href may have been inteded as a selector (e.g. '#container')
 				return $(this).attr('href');
 			},
+			target_url: function() {
+				// using this.href would give the absolute url, when the href may have been inteded as a selector (e.g. '#container')
+				return $(this).attr('target_url');
+			},
 			title: function() {
 				return this.title;
 			},
@@ -95,7 +99,7 @@
 						img[key] = val;
 					});
 				}
-
+				img['target_url'] = "";
 				return img;
 			},
 			createIframe: function() {
@@ -910,7 +914,7 @@
 	};
 
 	function load () {
-		var href, setResize, prep = publicMethod.prep, $inline, request = ++requests;
+		var href, target_url,setResize, prep = publicMethod.prep, $inline, request = ++requests;
 
 		active = true;
 
@@ -944,6 +948,9 @@
 		}
 
 		href = settings.get('href');
+		target_url = settings.get('target_url');
+
+
 
 		loadingTimer = setTimeout(function () {
 			$loadingOverlay.show();
@@ -971,6 +978,7 @@
 			href = retinaUrl(settings, href);
 
 			photo = settings.get('createImg');
+$(photo).attr('target_url',target_url);
 
 			$(photo)
 				.addClass(prefix + 'Photo')
@@ -1021,6 +1029,7 @@
 
 						photo.style.width = photo.width + 'px';
 						photo.style.height = photo.height + 'px';
+						photo.style.cursor = 'hand';
 						prep(photo);
 					}, 1);
 				});
