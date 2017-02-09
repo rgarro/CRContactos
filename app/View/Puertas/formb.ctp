@@ -11,7 +11,7 @@ function manage_position(position) {
 }
 
 	$(document).ready(function(){
-		//navigator.geolocation.getCurrentPosition(manage_position);
+		////navigator.geolocation.getCurrentPosition(manage_position);
 		$("#LeadLat").attr("value","9.74891699");
 		$("#LeadLon").attr("value","-83.75342799");
 		AddLead.getOptions({

@@ -69,6 +69,7 @@ class PuertasController extends CrcController {
 				if ($this->Lead->save($this->request->data['Lead'])) {
 					//$this->Session->setFlash('Gracias!! Pronto le contactaremos.', 'alert', array('plugin' => 'BoostCake','class' => 'alert-error'));
           $this->Session->write("lead_set",1);
+					$_SESSION['lead_set'] = 1;
 					return $this->redirect(array('action' => 'formb?agencia_id='.$_GET['agencia_id']."&marca_id=".$_GET['marca_id']));
 				} else {
 					$this->Session->setFlash('Error agregando el lead.', 'alert', array('plugin' => 'BoostCake','class' => 'alert-error'));
