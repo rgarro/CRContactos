@@ -57,8 +57,8 @@ foreach($fb2 as $p){
 ?>
 </center>
 <?php
-	unset($_SESSION["finale_banners"]);
-	unset($_SESSION["finale_data"]);
+	//unset($_SESSION["finale_banners"]);
+	//unset($_SESSION["finale_data"]);
 }else{
 	?>
 	<h4 style="color:#9C1903;">Gracias por enviarnos su solicitud de Información.
