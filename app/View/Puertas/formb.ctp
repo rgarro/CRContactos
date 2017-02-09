@@ -24,8 +24,8 @@ function manage_position(position) {
 </script>
 <div class="agencias form">
 <?php
-print_r($_SESSION);
-if(isset($_SESSION["lead_set"]) && $_SESSION["lead_set"]==1){
+//print_r($_SESSION);
+if(count($_SESSION["finale_banners"])){
     //$this->
     $_SESSION["lead_set"] = 0;
 ?>
@@ -57,8 +57,8 @@ foreach($fb2 as $p){
 ?>
 </center>
 <?php
-	unset($_SESSION["finale_banners"]);
-	unset($_SESSION["finale_data"]);
+	$_SESSION["finale_banners"] = [];
+	$_SESSION["finale_data"] = [];
 }else{
 	?>
 	<h4 style="color:#9C1903;">Gracias por enviarnos su solicitud de Información.

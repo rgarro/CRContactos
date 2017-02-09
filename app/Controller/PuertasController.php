@@ -45,29 +45,7 @@ class PuertasController extends CrcController {
 			exit;
 		}
 
-		/* begin finale block */
-		if(isset($_GET['finale_label'])){
-      $optf = array("conditions"=>array("Formfinale.label"=>$_GET['finale_label']));
-print_r($_GET);
-echo $this->Formfinale->find('count',$optf);
 
-
-			if($this->Formfinale->find('count',$optf)){
-				//$finale_data = $this->Formfinale->findByLabel($_GET['finale_label']);
-				$finale_data = $this->Formfinale->find("first",array("conditions"=>array("Formfinale.label"=>$_GET['finale_label'])));
-				$banners = array();
-				foreach($finale_data['Publifine'] as $f){
-					$d = $this->Publicidad->findById($f['publicidad_id']);
-					array_push($banners,$d);
-				}
-
-				$_SESSION['finale_banners'] = $banners;
-				$_SESSION['finale_data'] = $finale_data;
-print_r($_SESSION);
-exit;        
-			}
-		}
-		/* end finale block */
 		$opt = array("conditions"=>array("id"=>$_GET['agencia_id']));
 		if($this->Agencia->find('count',$opt)){
 			if ($this->request->is('post')) {
@@ -80,7 +58,27 @@ exit;
 				} else {
 					$this->Session->setFlash('Error agregando el lead.', 'alert', array('plugin' => 'BoostCake','class' => 'alert-error'));
 				}
-			}
+			}else{
+        /* begin finale block */
+    		if(isset($_GET['finale_label'])){
+          $optf = array("conditions"=>array("Formfinale.label"=>$_GET['finale_label']));
+
+
+    			if($this->Formfinale->find('count',$optf)){
+    				//$finale_data = $this->Formfinale->findByLabel($_GET['finale_label']);
+    				$finale_data = $this->Formfinale->find("first",array("conditions"=>array("Formfinale.label"=>$_GET['finale_label'])));
+    				$banners = array();
+    				foreach($finale_data['Publifine'] as $f){
+    					$d = $this->Publicidad->findById($f['publicidad_id']);
+    					array_push($banners,$d);
+    				}
+
+    				$_SESSION['finale_banners'] = $banners;
+    				$_SESSION['finale_data'] = $finale_data;
+    			}
+    		}
+    		/* end finale block */
+      }
 			$opt = array("conditions"=>array("agencia_id"=>$_GET['agencia_id']),"recursive"=>3);
 		$ma = $this->MarcaAgencia->find('all',$opt);
 			$this->set("fuentes",$this->Fuente->find('list',array('conditions'=>array("agencia_id"=>$_GET['agencia_id']),'fields' => array('texto', 'texto'))));
