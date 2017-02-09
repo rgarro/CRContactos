@@ -51,8 +51,6 @@ class PuertasController extends CrcController {
 			if($this->Formfinale->find('count',$optf)){
 				//$finale_data = $this->Formfinale->findByLabel($_GET['finale_label']);
 				$finale_data = $this->Formfinale->find("first",array("conditions"=>array("Formfinale.label"=>$_GET['finale_label'])));
-
-
 				$banners = array();
 				foreach($finale_data['Publifine'] as $f){
 					$d = $this->Publicidad->findById($f['publicidad_id']);

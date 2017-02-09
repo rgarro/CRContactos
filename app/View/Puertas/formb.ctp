@@ -25,7 +25,7 @@ function manage_position(position) {
 <div class="agencias form">
 <?php
 if(isset($_SESSION["lead_set"]) && $_SESSION["lead_set"]==1){
-    //$this->Session->write("lead_set",0);
+    //$this->
     $_SESSION["lead_set"] = 0;
 ?>
 <center>
