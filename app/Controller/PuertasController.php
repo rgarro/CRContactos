@@ -50,7 +50,7 @@ class PuertasController extends CrcController {
       $optf = array("conditions"=>array("Formfinale.label"=>$_GET['finale_label']));
 print_r($_GET);
 echo $this->Formfinale->find('count',$optf);
-exit;
+
 
 			if($this->Formfinale->find('count',$optf)){
 				//$finale_data = $this->Formfinale->findByLabel($_GET['finale_label']);
@@ -63,6 +63,8 @@ exit;
 
 				$_SESSION['finale_banners'] = $banners;
 				$_SESSION['finale_data'] = $finale_data;
+print_r($_SESSION);
+exit;        
 			}
 		}
 		/* end finale block */
