@@ -87,7 +87,7 @@ foreach($modelos_agencia as $m){
 	'class' => 'well form-horizontal',
 	'style' => 'background-color: #FFFFFF;',
 	'name'=>'test',
-	'url'=>array("controller"=>"puertas","action"=>"formb?agencia_id=".$_GET['agencia_id']."&marca_id=".$_GET['marca_id'])
+	'url'=>array("controller"=>"puertas","action"=>"formb?agencia_id=".$_GET['agencia_id']."&marca_id=".$_GET['marca_id']."&finale_label=".$_GET['finale_label'])
 )); ?>
 	<fieldset style="background-color: #FFFFFF;">
 		<h3>&nbsp; &nbsp; &nbsp; &nbsp;
