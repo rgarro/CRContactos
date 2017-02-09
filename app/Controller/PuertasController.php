@@ -52,7 +52,7 @@ class PuertasController extends CrcController {
 				$this->Lead->create();
 				if ($this->Lead->save($this->request->data['Lead'])) {
 					//$this->Session->setFlash('Gracias!! Pronto le contactaremos.', 'alert', array('plugin' => 'BoostCake','class' => 'alert-error'));
-          $this->Session->write("lead_set",1);
+          //$this->Session->write("lead_set",1);
 					$_SESSION['lead_set'] = 1;
 					//return $this->redirect(array('action' => 'formb?agencia_id='.$_GET['agencia_id']."&marca_id=".$_GET['marca_id']));
 				} else {
@@ -72,7 +72,7 @@ class PuertasController extends CrcController {
     					$d = $this->Publicidad->findById($f['publicidad_id']);
     					array_push($banners,$d);
     				}
-
+            $_SESSION['lead_set'] = 0;
     				$_SESSION['finale_banners'] = $banners;
     				$_SESSION['finale_data'] = $finale_data;
     			}
