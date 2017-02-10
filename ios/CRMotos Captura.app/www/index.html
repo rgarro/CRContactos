@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CRMotos Captura</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="stylesheet" href="jquery.mobile-1.3.1.css" />
+  <script src="jquery-1.9.1.min.js"></script>
+  <script src="jquery.mobile-1.3.1.min.js"></script>
+</head>
+<body>
+
+<div data-role="page">
+
+  <div data-role="header" data-position="fixed">
+    <h1>CRMotos Captura</h1>
+  </div><!-- /header -->
+<div data-role="content">
+  <form action="/index.php/puertas/formb?agencia_id=1&amp;marca_id=39" class="well form-horizontal" style="background-color: #FFFFFF;" name="test" id="LeadFormbForm" enctype="multipart/form-data" method="post" accept-charset="utf-8"><div style="display:none;"><input type="hidden" name="_method" value="POST"/><input type="hidden" name="data[_Token][key]" value="aaebf95610303a4512465f9ecc62e9b71aee057a" id="Token287333913"/></div>	<fieldset style="background-color: #FFFFFF;">
+  <input type="hidden" name="data[Lead][agencia_id]" value="1" id="LeadAgenciaId"/><input type="hidden" name="data[Lead][modelos]" id="LeadModelos"/><input type="hidden" name="data[Lead][marca_id]" value="39" id="LeadMarcaId"/><input type="hidden" name="data[Lead][fuente]" value="crmotos.com" id="LeadFuente"/><!-- begin lista fotos -->
+  <fieldset data-role="controlgroup">
+  		<legend style="color:#9C1903;"><i class="fa-icon-cogs"></i> Modelo</legend>
+  		<div class="ui-field-contain required">
+
+  <select name="data[Lead][modelos]" id="LeadModelos" required="required">
+  	<option value="" disabled=""  selected="">*Seleccione un modelo</option>
+  <option value="Moto 100 cc">Moto 100 cc</option>
+  <option value="Moto 125 cc">Moto 125 cc</option>
+  <option value="Moto 150 cc">Moto 150 cc</option>
+  <option value="Scooter 200 cc">Scooter 200 cc</option>
+  <option value="Leon">Leon</option>
+  <option value="Sm2000">Sm2000</option>
+  <option value="rolobmx">rolobmx</option>
+  </select></div>
+  </fieldset>
+  <!-- end-->
+  <!-- end lista fotos -->
+  	</fieldset>
+  	<fieldset data-role="controlgroup">
+  		<legend style="color:#9C1903;"><i class="fa-icon-user"></i> Datos Personales</legend>
+  <div class="ui-field-contain required">
+    <input name="data[Lead][nombre]" placeholder="Nombre" maxlength="50" type="text" id="LeadNombre" required="required"/>
+  </div>
+  <div class="ui-field-contain required">
+    <input name="data[Lead][primer_apellido]" placeholder="Primer Apelllido" maxlength="50" type="text" id="LeadPrimerApellido" required="required"/>
+  </div>
+  <div class="ui-field-contain">
+    <input name="data[Lead][segundo_apellido]" placeholder="Segundo Apelllido" maxlength="50" type="text" id="LeadSegundoApellido"/>
+  </div>
+  <div class="ui-field-contain required">
+    <input name="data[Lead][email]" placeholder="Email" maxlength="100" type="email" id="LeadEmail" required="required"/>
+  </div>
+  <div class="ui-field-contain required">
+    <input name="data[Lead][celular]" placeholder="Celular" maxlength="10" type="text" id="LeadCelular" required="required"/>
+  </div>
+  <div class="ui-field-contain">
+    <input name="data[Lead][telefono]" placeholder="Telefono" maxlength="10" type="text" id="LeadTelefono"/>
+  </div>
+  <div class="ui-field-contain"><label for="LeadHorario" class="control-label">Seleccione un horario</label> <select name="data[Lead][horario]" id="LeadHorario">
+  <option value="0"></option>
+  <option value="1">00:00am</option>
+  <option value="2">01:00am</option>
+  <option value="3">02:00am</option>
+  <option value="4">03:00am</option>
+  <option value="5">04:00am</option>
+  <option value="6">05:00am</option>
+  <option value="7">06:00am</option>
+  <option value="8">07:00am</option>
+  <option value="9">08:00am</option>
+  <option value="10">09:00am</option>
+  <option value="11">10:00am</option>
+  <option value="12">11:00am</option>
+  <option value="13">12:00pm</option>
+  <option value="14">01:00pm</option>
+  <option value="15">02:00pm</option>
+  <option value="16">03:00pm</option>
+  <option value="17">04:00pm</option>
+  <option value="18">05:00pm</option>
+  <option value="19">06:00pm</option>
+  <option value="20">07:00pm</option>
+  <option value="21">08:00pm</option>
+  <option value="22">09:00pm</option>
+  <option value="23">10:00pm</option>
+  <option value="24">11:00pm</option>
+  </select></div>
+</fieldset>
+  	<fieldset data-role="controlgroup">
+  		<legend style="color:#9C1903;"><i class="fa-icon-globe"></i> Dirección</legend>
+ <div class="ui-field-contain required">
+   <input name="data[Lead][direccion]" placeholder="Dirección" maxlength="100" type="text" id="LeadDireccion" required="required"/>
+ </div>
+ <div class="ui-field-contain  required">
+   <input name="data[Lead][canton]" placeholder="Ciudad" maxlength="100" type="text" id="LeadCanton" required="required"/>
+ </div>
+ <div class="ui-field-contain required"><label for="LeadProvincia" class="control-label">Seleccione la provincia</label>
+   <select name="data[Lead][provincia]" id="LeadProvincia" required="required">
+  <option value="Alajuela">Alajuela</option>
+  <option value="Heredia">Heredia</option>
+  <option value="Cartago">Cartago</option>
+  <option value="San José">San José</option>
+  <option value="Puntarenas">Puntarenas</option>
+  <option value="Guanacaste">Guanacaste</option>
+  <option value="Limon">Limon</option>
+  </select></div><input type="hidden" name="data[Lead][status]" value="1" id="LeadStatus"/>	</fieldset>
+  <fieldset>
+  		<legend style="color:#9C1903;">Comentarios <i class="fa-icon-comment"></i></legend>
+  <div class="ui-field-contain">
+    <label for="LeadComentario" class="control-label">Comentario</label>
+    <textarea name="data[Lead][comentario]" cols="30" rows="6" id="LeadComentario"></textarea>
+    </div>
+    <input type="hidden" name="data[Lead][boletin]" value="1" id="LeadBoletin"/>
+    <input type="hidden" name="data[Lead][lat]" value="0" id="LeadLat"/>
+    <input type="hidden" name="data[Lead][lon]" value="0" id="LeadLon"/>
+  </fieldset>
+  <div class="submit"><input  class="btn btn-danger" type="submit" value="Enviar"/></div><div style="display:none;"><input type="hidden" name="data[_Token][fields]" value="0ffd4c742a807edba3a9715e4b454c1d0a73e4f6%3ALead.agencia_id%7CLead.boletin%7CLead.fuente%7CLead.lat%7CLead.lon%7CLead.marca_id%7CLead.modelos%7CLead.status" id="TokenFields999062042"/><input type="hidden" name="data[_Token][unlocked]" value="" id="TokenUnlocked1069488821"/></div></form>
+</div>
+  <!-- /content -->
+
+  <div data-role="footer" data-position="fixed">
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#" data-icon="gear" class="ui-btn-active ui-state-persist">Button 1</a></li>
+        <li><a href="#" data-icon="refresh">Button 2</a></li>
+        <li><a href="#" data-icon="check">Button 3</a></li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /page -->
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>
