@@ -8,6 +8,7 @@
  //App::uses('CrcController', 'Controller');
  App::uses('AppController', 'Controller');
  App::uses('Publicidad', 'Model');
+App::uses('Lead', 'Model');
 class PublicidadController extends AppController {
 
 	/*public function beforeFilter(){
@@ -15,6 +16,8 @@ class PublicidadController extends AppController {
 			//$this->allow_only_sa();
 		//$this->Security->unlockedActions = array('modelos_select','agregar_seguimiento','agregar_lead_directamente');
 	}*/
+
+  public $uses = array("Publicidad","Lead");
 
 	public function index(){
 		$this->layout = "ajax";
@@ -72,5 +75,28 @@ class PublicidadController extends AppController {
 	  $this->layout = "ajax";
 	  $this->set('data',$this->Publicidad->find('all',array("conditions"=>array("Publicidad.label IN('".str_replace(",","','",$_GET['labels'])."')"))));
   }
+
+  public function crmotoscaptura(){
+    $this->response->header('Access-Control-Allow-Origin', '*');
+	  $this->layout = "ajax";
+    if ($this->request->is('post')) {
+      $this->Lead->create();
+      $success = false;
+      $lead_id = 0;
+      $errors = array();
+      if ($this->Lead->save($this->request->data['Lead'])) {
+        $success = true;
+        $lead_id = $this->Lead->id;
+      }else{
+        $errors = $this->Lead->validationErrors;
+      }
+      $data = array("success"=>$success,"lead_id"=>$lead_id,"errors"=>$errors);
+      $this->set('data', $data);
+      $this->render("/General/serialize_json");
+    }else{
+      header("Location: http://yahoo.com");
+      exit;
+  }
+}
 
 }
