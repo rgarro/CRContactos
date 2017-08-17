@@ -4,19 +4,20 @@
  *
  * @author Rolando <rgarro@gmail.com>
  */
-App::uses('CakeEmail', 'Network/Email'); 
+App::import('Vendor', 'PHPExcel');
+App::uses('CakeEmail', 'Network/Email');
 App::uses('CrcController', 'Controller');
 App::uses('Lead', 'Model');
- 
+
 class LeadsController extends CrcController {
 
 	public $uses = array('Agencia','LeadHistoria','MarcaAgencia','Fuente','Marca','LeadSeguimiento','User','Administradore','Vendedore','Notificacione','Modelo','Lead','LeadSeguidore','ModeloAgencia','ModeloPic');
-	
+
 	public function beforeFilter(){
 		parent::beforeFilter();
 		$this->Security->unlockedActions = array('modelos_select','agregar_seguimiento','agregar_lead_directamente');
 	}
-	
+
 	public function report_vendedor_url(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
@@ -31,25 +32,25 @@ class LeadsController extends CrcController {
 								"Administradore.agencia_id"=>$agencia_id
 								)
 				);
-				
+
 		$opt_vend = array(
 				"conditions"=>array(
 								"User.active"=>1,
 								"Vendedore.agencia_id"=>$agencia_id
 								)
-				);		
+				);
 		$admins = $this->Administradore->find('all',$opt_ad);
 		$vendedores = $this->Vendedore->find('all',$opt_vend);
 		$i=0;
 		foreach($admins as $adm){
 			$users[$i]['User']['nombre'] = $adm['User']['nombre']." ".$adm['User']['apellido'];
 			$users[$i]['User']['id'] = $adm['User']['id'];
-			$i++; 
+			$i++;
 		}
 		foreach($vendedores as $adm){
 			$users[$i]['User']['nombre'] = $adm['User']['nombre']." ".$adm['User']['apellido'];
 			$users[$i]['User']['id'] = $adm['User']['id'];
-			$i++; 
+			$i++;
 		}
 
 		for($i=0;$i<count($users);$i++){
@@ -62,7 +63,7 @@ class LeadsController extends CrcController {
 			$opt['joins'] = array(array('table' => 'lead_seguidores',
                                    'alias' => 'LeadSeguidore',
                                    'type' => 'INNER',
-                                   'conditions' => array('Lead.id = LeadSeguidore.lead_id',"LeadSeguidore.user_id = '".$users[$i]['User']['id']."'")));						
+                                   'conditions' => array('Lead.id = LeadSeguidore.lead_id',"LeadSeguidore.user_id = '".$users[$i]['User']['id']."'")));
 			$users[$i]['User']['asignado'] = $this->Lead->find('count',$opt);
 			//begin
 			$opt = array('conditions' => array(
@@ -102,23 +103,23 @@ class LeadsController extends CrcController {
 		}
 
 		$result['users'] = $users;
-		$_SESSION['reporte_vendedor_result'] = $result;		
+		$_SESSION['reporte_vendedor_result'] = $result;
 		$this->set("result",$result);
 	}
-	
-	
+
+
 	public function reporte_vendedor(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
 	}
-	
+
 	public function report_modelo_url(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
 		$opt = array('conditions' => array(
 										"id" => $this->Session->read('agencia_id')
 									),'recursive'=>3);
-		$age = $this->Agencia->find('first',$opt);							
+		$age = $this->Agencia->find('first',$opt);
 		$this->set('agencia',$age);
 		$result = array();
 		$result['desde'] = $_GET['desde'];
@@ -127,7 +128,7 @@ class LeadsController extends CrcController {
 		$result['total'] = 0;
 		$total = 0;
 		$i=0;
-		foreach($age['MarcaAgencia'] as $a){	
+		foreach($age['MarcaAgencia'] as $a){
 			$result["marcas"][$i]['marca'] = $a['Marca']['nombre'];
 			$opt = array('conditions' => array(
 										"Lead.agencia_id" => $this->Session->read('agencia_id'),
@@ -140,45 +141,74 @@ class LeadsController extends CrcController {
 				$res = $this->Lead->query($sql);
 				$y=0;
 				foreach($res as $r){
-					
+
 					$sqlb = "SELECT COUNT(*) as total FROM leads WHERE modelos LIKE '%". $r['leads']['modelos']."%' AND agencia_id = '".$this->Session->read('agencia_id')."' AND marca_id ='".$a['Marca']['id']."' AND creadad BETWEEN '".$_GET['desde']."' AND '".$_GET['hasta']." 23:00:00'";
 					$resb = $this->Lead->query($sqlb);
-					$result["marcas"][$i]['modelos'][$y] = array('modelo'=>$r['leads']['modelos'],'total'=>$resb[0][0]['total']);					
+					$result["marcas"][$i]['modelos'][$y] = array('modelo'=>$r['leads']['modelos'],'total'=>$resb[0][0]['total']);
 					$y++;
-				}				
+				}
 			}
 			$total = $total + $result["marcas"][$i]['total'];
 			$i++;
 		}
-		$result['total'] = $total;	
+		$result['total'] = $total;
 		$_SESSION['reporte_modelo_result'] = $result;
 		$this->set('result',$result);
-		$this->set('total',$total);	
+		$this->set('total',$total);
 	}
-	
+
 	public function reporte_modelo(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
 	}
-	
+
 	public function csv_downloads(){
 		if($_GET['reporte']==1){
-			$csv_str = 	$_SESSION['reporte_marca_result']['desde'].",".$_SESSION['reporte_marca_result']['hasta']."\n";
+			$title = 	$_SESSION['reporte_marca_result']['desde'].",".$_SESSION['reporte_marca_result']['hasta']."\n";
+
+      $objPHPExcel = new PHPExcel();
+      $objPHPExcel->getProperties()->setCreator("CRContactos")
+        ->setLastModifiedBy("Rolando Garro")
+        ->setTitle($title)
+        ->setSubject("CRCContactos Reporte Marcas")
+        ->setDescription("CRContactos Reporte Marca fechas")
+        ->setKeywords("CRContactos")
+        ->setCategory("CRContactos");
+
+        $objPHPExcel->setActiveSheetIndex(0);
+
+				$objPHPExcel->getActiveSheet()->setCellValue('A1', "Marca");
+				$objPHPExcel->getActiveSheet()->setCellValue('B1', "Total");
+      $num = 2;
 			foreach($_SESSION['reporte_marca_result']['marcas'] as $r){
-				$csv_str .= $r['marca'].",".$r['total']."\n";
+				//$csv_str .= $r['marca'].",".$r['total']."\n";
+        $objPHPExcel->setActiveSheetIndex(0);
+
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$num, $r['marca']);
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$num, $r['total']);
+        $num++;
 			}
-			$csv_str .= "Total:,".$_SESSION['reporte_marca_result']['total']."\n";
-			@header("Last-Modified: " . @gmdate("D, d M Y H:i:s",$_GET['timestamp']) . " GMT");
+      header('Content-Type: application/vnd.ms-excel');
+			//header('Content-Disposition: attachment;filename=\"'.$title.'\"');
+			header('Content-Disposition: attachment;filename="crcontactos-reporte-marca'.'.xls"');
+			header('Cache-Control: max-age=0');
+			// If you're serving to IE 9, then the following may be needed
+			header('Cache-Control: max-age=1');
+			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+			$objWriter->save('php://output');
+			exit;
+			//$csv_str .= "Total:,".$_SESSION['reporte_marca_result']['total']."\n";
+			/*@header("Last-Modified: " . @gmdate("D, d M Y H:i:s",$_GET['timestamp']) . " GMT");
 			@header("Content-type: text/x-csv");
 			header("Content-Disposition: attachment; filename=reporte_marca.csv");
 			echo $csv_str;
-			exit;								
+			exit;*/
 		}
 		if($_GET['reporte']==2){
 			$csv_str = 	$_SESSION['reporte_modelo_result']['desde'].",".$_SESSION['reporte_marca_result']['hasta']."\n";
 			foreach($_SESSION['reporte_modelo_result']['marcas'] as $r){
 				$csv_str .= $r['marca'].",".$r['total']."\n";
-				foreach($r['modelos'] as $m){ 
+				foreach($r['modelos'] as $m){
 					$csv_str .= $m['modelo'].",".$m['total']."\n";
 	 			}
 			}
@@ -187,7 +217,7 @@ class LeadsController extends CrcController {
 			@header("Content-type: text/x-csv");
 			header("Content-Disposition: attachment; filename=reporte_modelo.csv");
 			echo $csv_str;
-			exit;								
+			exit;
 		}
 	if($_GET['reporte']==3){
 			$csv_str = 	$_SESSION['reporte_vendedor_result']['desde'].",".$_SESSION['reporte_vendedor_result']['hasta']."\n";
@@ -195,12 +225,12 @@ class LeadsController extends CrcController {
 			foreach($_SESSION['reporte_vendedor_result']['users'] as $r){
 				$csv_str .= $r['User']['nombre'].",".$r['User']['asignado'].",".$r['User']['activo'].",".$r['User']['archivado'].",".$r['User']['vendido'].",".$r['User']['total']."\n";
 			}
-			
+
 			@header("Last-Modified: " . @gmdate("D, d M Y H:i:s",$_GET['timestamp']) . " GMT");
 			@header("Content-type: text/x-csv");
 			header("Content-Disposition: attachment; filename=reporte_vendedor.csv");
 			echo $csv_str;
-			exit;								
+			exit;
 		}
     if($_GET['reporte']==4){
         $csv_str  = "marca,modelos,agencia,nombre,primer_apellido,segundo_apellido,email,direccion,provincia,celular,telefono,status,lat,lon,ip_origen,creada,cambio,comentario,boletin,fuente\n";
@@ -215,14 +245,14 @@ class LeadsController extends CrcController {
 			exit;
 		}
 	}
-	
+
 	public function report_marca_url(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
 		$opt = array('conditions' => array(
 										"id" => $this->Session->read('agencia_id')
 									),'recursive'=>3);
-		$age = $this->Agencia->find('first',$opt);							
+		$age = $this->Agencia->find('first',$opt);
 		$this->set('agencia',$age);
 		$result = array();
 		$result['desde'] = $_GET['desde'];
@@ -231,7 +261,7 @@ class LeadsController extends CrcController {
 		$result['total'] = 0;
 		$total = 0;
 		$i=0;
-		foreach($age['MarcaAgencia'] as $a){	
+		foreach($age['MarcaAgencia'] as $a){
 			$result["marcas"][$i]['marca'] = $a['Marca']['nombre'];
 			$opt = array('conditions' => array(
 										"Lead.agencia_id" => $this->Session->read('agencia_id'),
@@ -245,9 +275,9 @@ class LeadsController extends CrcController {
 		$result['total'] = $total;
 		$_SESSION['reporte_marca_result'] = $result;
 		$this->set('result',$result);
-		$this->set('total',$total);								
+		$this->set('total',$total);
 	}
-	
+
 	public function reporte_marca(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
@@ -255,15 +285,15 @@ class LeadsController extends CrcController {
 										"agencia_id" => $this->Session->read('agencia_id')
 									));
 		$this->set('marcas',$this->MarcaAgencia->find('all',$opt));*/
-		
+
 	}
-	
+
 	public function modelos_select(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
-		$this->set('modelos',$this->Modelo->findAllByMarcaId($_POST['marca_id']));		
+		$this->set('modelos',$this->Modelo->findAllByMarcaId($_POST['marca_id']));
 	}
-	
+
 	public function reporte_url(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
@@ -279,16 +309,16 @@ class LeadsController extends CrcController {
 		}
 		if($_GET['modelo'] != "todos"){
 			$opt['conditions'][] = "Lead.modelos LIKE '%".$_GET['modelo']."%'";
-		}							
+		}
 		if($_GET['user_id']>0){
 			$opt['joins'] = array(array('table' => 'lead_seguidores',
                                    'alias' => 'LeadSeguidore',
                                    'type' => 'INNER',
                                    'conditions' => array('Lead.id = LeadSeguidore.lead_id',"LeadSeguidore.user_id = '".$_GET['user_id']."'")));
 		}
-									
+
 		$leads = $this->Lead->find('all',$opt);
-		
+
 		for($i=0;$i<count($leads);$i++){
 			//modelo pics
 			$modelos = explode(",",$leads[$i]['Lead']['modelos']);
@@ -297,7 +327,7 @@ class LeadsController extends CrcController {
 		$_SESSION['reporte_result'] = $leads;
         $this->set("leads",$leads);
 	}
-	
+
 	public function activar_seguimiento(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$l = $this->LeadSeguidore->findById($_GET['lead_seguidore_id']);
@@ -327,22 +357,22 @@ class LeadsController extends CrcController {
 				->replyTo($lead['Lead']['email'])
 				->emailFormat('html')
 				->to($to)
-				->send();	
+				->send();
 		}
 		//status to acti vado
 		$lead_data = array("Lead"=>array("id"=>$l['Lead']['id'],"cambio"=>date("Y-m-d H:i:s"),"status"=>5,"marca_id"=>$l['Lead']['marca_id']));
 		$this->Lead->create();
 		$this->Lead->save($lead_data);
-		
+
 		$history_data = array("LeadHistoria"=>array("user_id"=>$this->Auth->user('id'),"lead_id"=>$l['Lead']['id'],"fecha"=>date("Y-m-d H:i:s"),"status"=>5));
 		$this->LeadHistoria->create();
 		$this->LeadHistoria->save($history_data);
-		//termina notificaciones  		
-		$data = array("is_success"=>1,"lead_id"=>$l['Lead']['id']);  
+		//termina notificaciones
+		$data = array("is_success"=>1,"lead_id"=>$l['Lead']['id']);
 		$this->set('data', $data);
 		$this->render("/General/serialize_json");
 	}
-	
+
 	public function reportes(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
@@ -363,27 +393,27 @@ class LeadsController extends CrcController {
 								"User.active"=>1,
 								"Vendedore.agencia_id"=>$agencia_id
 								)
-				);		
+				);
 		$admins = $this->Administradore->find('all',$opt_ad);
 		$vendedores = $this->Vendedore->find('all',$opt_vend);
 		$i=0;
 		foreach($admins as $adm){
 			$users[$i]['User'] = $adm['User'];
-			$i++; 
+			$i++;
 		}
 		foreach($vendedores as $adm){
 			$users[$i]['User'] = $adm['User'];
-			$i++; 
-		}		
+			$i++;
+		}
 		$this->set("users",$users);
 	}
-	
+
 	public function lead_comentarios(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
 		$this->set("seguimientos",$this->LeadSeguimiento->findAllByLeadId($_GET['lead_id']));
 	}
-	
+
 	public function agregar_seguimiento(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
@@ -391,11 +421,11 @@ class LeadsController extends CrcController {
 		$this->request->data['LeadSeguimiento']['user_id'] = $this->Auth->user('id');
 		$this->LeadSeguimiento->create();
 		$this->LeadSeguimiento->save($this->request->data['LeadSeguimiento']);
-		$data = array("is_success"=>1,"lead_id"=>$this->request->data['LeadSeguimiento']['lead_id']);  
+		$data = array("is_success"=>1,"lead_id"=>$this->request->data['LeadSeguimiento']['lead_id']);
 		$this->set('data', $data);
 		$this->render("/General/serialize_json");
 	}
-	
+
 	public function desasignar_seguidor(){
 		//$this->allow_sa_and_admin();
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
@@ -403,16 +433,16 @@ class LeadsController extends CrcController {
 		//begin notificacion
 		$user = $this->User->findById($_GET['user_id']);
 		$lead = $this->Lead->findById($_GET['lead_id']);
-				
+
 		if(count($lead)){ //security check
 			//status
-		
+
 			$title = "Dejar de Seguir a ".Lead::setEmailSubject($lead);
 			//modelo pics
 			$modelos = explode(",",$lead['Lead']['modelos']);
 			$pics = array();
 			$pics = $this->_get_pics($modelos);
-				
+
 		$Email = new CakeEmail();
 				$Email->viewVars(array('pics'=>$pics,'data'=>$lead['Lead'],'title'=>$title));
 				$Email->template('notificar_lead_desasignado')
@@ -420,10 +450,10 @@ class LeadsController extends CrcController {
 				->subject($title)
 				->emailFormat('html')
 				->to($user['User']['email'])
-				->send();	
-				
+				->send();
+
 		//end notificacion
-			
+
 			$this->LeadSeguidore->deleteAll(array("LeadSeguidore.user_id"=>$_GET['user_id'],"LeadSeguidore.lead_id"=>$_GET['lead_id']));
 			$data = array("is_success"=>1);
 		}else{
@@ -454,24 +484,24 @@ class LeadsController extends CrcController {
 				$tos[] = $no['Notificacione']['email'];
 			}
 		$lead = $this->Lead->findById($leads[$i]);
-		
+
 		if($lead['Lead']['status'] == 1){
-			$status = "Nuevo"; 
+			$status = "Nuevo";
 		}
 		if($lead['Lead']['status'] == 2){
-			$status = "Asignado"; 
+			$status = "Asignado";
 		}
 		if($lead['Lead']['status'] == 3){
-			$status = "Vendido"; 
+			$status = "Vendido";
 		}
 		if($lead['Lead']['status'] == 4){
-			$status = "Archivado"; 
+			$status = "Archivado";
 		}
 		if($lead['Lead']['status'] == 5){
-			$status = "Activo"; 
+			$status = "Activo";
 		}
-		
-		
+
+
 		$title = "Status ".$status." ".Lead::setEmailSubject($lead);
 			//modelo pics
 			$modelos = explode(",",$lead['Lead']['modelos']);
@@ -486,13 +516,13 @@ class LeadsController extends CrcController {
 				->emailFormat('html')
 				->to($to)
 				->replyTo($lead['Lead']['email'])
-				->send();	
+				->send();
 		}
-		//termina notificaciones  		
+		//termina notificaciones
 		}
-$data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));  
+$data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));
 		$this->set('data', $data);
-		$this->render("/General/serialize_json");  	
+		$this->render("/General/serialize_json");
 	}
 
 	public function cambiar_lead_status(){
@@ -503,12 +533,12 @@ $data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));
 		  $lead_data = array("Lead"=>array("id"=>$_GET['lead_id'],"cambio"=>date("Y-m-d H:i:s"),"status"=>$_GET['status'],"marca_id"=>$lead['Lead']['marca_id']));
 		  $this->Lead->create();
 		  $this->Lead->save($lead_data);
-		  
+
 		  $history_data = array("LeadHistoria"=>array("user_id"=>$this->Auth->user('id'),"lead_id"=>$_GET['lead_id'],"fecha"=>date("Y-m-d H:i:s"),"status"=>$_GET['status']));
 		$this->LeadHistoria->create();
 		$this->LeadHistoria->save($history_data);
-		//empieza notificaciones  
-		 
+		//empieza notificaciones
+
 		$segs = $this->LeadSeguidore->findAllByLeadId($_GET['lead_id']);
 		$tos = array();
 		foreach($segs as $s){
@@ -519,24 +549,24 @@ $data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));
 				$tos[] = $no['Notificacione']['email'];
 			}
 		$lead = $this->Lead->findById($_GET['lead_id']);
-		
+
 		if($lead['Lead']['status'] == 1){
-			$status = "Nuevo"; 
+			$status = "Nuevo";
 		}
 		if($lead['Lead']['status'] == 2){
-			$status = "Asignado"; 
+			$status = "Asignado";
 		}
 		if($lead['Lead']['status'] == 3){
-			$status = "Vendido"; 
+			$status = "Vendido";
 		}
 		if($lead['Lead']['status'] == 4){
-			$status = "Archivado"; 
+			$status = "Archivado";
 		}
 		if($lead['Lead']['status'] == 5){
-			$status = "Activo"; 
+			$status = "Activo";
 		}
-		
-		
+
+
 		$title = "Status ".$status." ".Lead::setEmailSubject($lead);
 			//modelo pics
 			$modelos = explode(",",$lead['Lead']['modelos']);
@@ -551,14 +581,14 @@ $data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));
 				->emailFormat('html')
 				->to($to)
 				->replyTo($lead['Lead']['email'])
-				->send();	
+				->send();
 		}
-		//termina notificaciones  		  
-		$data = array("is_success"=>1,"lead_id"=>$_GET['lead_id']);  
+		//termina notificaciones
+		$data = array("is_success"=>1,"lead_id"=>$_GET['lead_id']);
 		$this->set('data', $data);
-		$this->render("/General/serialize_json");  		
+		$this->render("/General/serialize_json");
 	}
-	
+
 	public function asignar_seguidor(){
 		//$this->allow_sa_and_admin();
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
@@ -566,26 +596,26 @@ $data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));
 		//begin notificacion
 		$user = $this->User->findById($_GET['user_id']);
 		$lead = $this->Lead->findById($_GET['lead_id']);
-				
+
 		if(count($lead)){ //security check
 			//status
 			if($lead['Lead']['status'] == 1){
 				$lead_data = array("Lead"=>array("id"=>$lead['Lead']['id'],"status"=>2,"marca_id"=>$lead['Lead']['marca_id']));
 				$this->Lead->create();
 				$this->Lead->save($lead_data);
-				
+
 				$history_data = array("LeadHistoria"=>array("user_id"=>$this->Auth->user('id'),"lead_id"=>$_GET['lead_id'],"fecha"=>date("Y-m-d H:i:s"),"status"=>2));
 		$this->LeadHistoria->create();
 		$this->LeadHistoria->save($history_data);
 			}
-		
-		
+
+
 			$title = "Debe Seguir a ".Lead::setEmailSubject($lead);;
 			//modelo pics
 			$modelos = explode(",",$lead['Lead']['modelos']);
 			$pics = array();
 			$pics = $this->_get_pics($modelos);
-				
+
 		$Email = new CakeEmail();
 				$Email->viewVars(array('pics'=>$pics,'data'=>$lead['Lead'],'title'=>$title));
 				$Email->template('notificar_lead_asignado')
@@ -594,8 +624,8 @@ $data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));
 				->emailFormat('html')
 				->to($user['User']['email'])
 				->replyTo($lead['Lead']['email'])
-				->send();	
-				
+				->send();
+
 		//end notificacion
 			$s_data = array("LeadSeguidore"=>array("user_id"=>$_GET['user_id'],"lead_id"=>$_GET['lead_id'],"desde"=>date("Y-m-d H:i:s")));
 			$this->LeadSeguidore->create();
@@ -607,7 +637,7 @@ $data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));
 		$this->set('data', $data);
 		$this->render("/General/serialize_json");
 	}
-	
+
 	public function usuarios_lead(){
 		//$this->allow_sa_and_admin();
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
@@ -634,22 +664,22 @@ $data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));
 								"Vendedore.agencia_id"=>$agencia_id,
 								"NOT"=>array("User.id"=>$seguidores_ids)
 								)
-				);		
+				);
 		$admins = $this->Administradore->find('all',$opt_ad);
 		$vendedores = $this->Vendedore->find('all',$opt_vend);
 		$i=0;
 		foreach($admins as $adm){
 			$users[$i]['User'] = $adm['User'];
-			$i++; 
+			$i++;
 		}
 		foreach($vendedores as $adm){
 			$users[$i]['User'] = $adm['User'];
-			$i++; 
-		}		
+			$i++;
+		}
 		$this->set("users",$users);
-		$this->set('lead_id',$_GET['lead_id']);		
+		$this->set('lead_id',$_GET['lead_id']);
 	}
-	
+
 	public function detalle_lead(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
@@ -657,24 +687,24 @@ $data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));
 		//modelo pics
 			$modelos = explode(",",$lead['Lead']['modelos']);
 			$pics = $this->_get_pics($modelos);
-		$this->set('user_id',$this->Auth->user('id'));	
-		$this->set('pics',$pics);	
-		$this->set('lead',$lead);	
+		$this->set('user_id',$this->Auth->user('id'));
+		$this->set('pics',$pics);
+		$this->set('lead',$lead);
 	}
-	
+
 	public function borra_lead(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
 		//begin notificacion
 		$notificaciones = $this->Notificacione->findAllByAgenciaId($this->Session->read('agencia_id'));
-		$lead = $this->Lead->findByIdAndAgenciaId($_GET['lead_id'],$this->Session->read('agencia_id'));		
+		$lead = $this->Lead->findByIdAndAgenciaId($_GET['lead_id'],$this->Session->read('agencia_id'));
 		if(count($lead)){ //security check
 			$title = "Removido ".Lead::setEmailSubject($lead);;
 			//modelo pics
 			$modelos = explode(",",$lead['Lead']['modelos']);
 			$pics = array();
 			$pics = $this->_get_pics($modelos);
-			foreach($notificaciones as $no){			
+			foreach($notificaciones as $no){
 		$Email = new CakeEmail();
 				$Email->viewVars(array('pics'=>$pics,'data'=>$lead['Lead'],'title'=>$title));
 				$Email->template('notificar_lead_removido')
@@ -683,7 +713,7 @@ $data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));
 				->emailFormat('html')
 				->to($no['Notificacione']['email'])
 				->replyTo($lead['Lead']['email'])
-				->send();	
+				->send();
 				}
 		//end notificacion
 			$this->Lead->delete($_GET['lead_id']);
@@ -694,7 +724,7 @@ $data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));
 		$this->set('data', $data);
 		$this->render("/General/serialize_json");
 	}
-	
+
 	public function leads_atendiendo(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
@@ -708,7 +738,7 @@ $data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));
 		}
 		$this->set("leads",$leads);
 	}
-	
+
 	public function _get_pics($modelos){
 		$pics = array();
 			$y = 0;
@@ -716,17 +746,17 @@ $data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));
 				$model = new Modelo();
 				$tmp = $model->findByModelo($mod);
 				if(isset($tmp['ModeloPic']) && count($tmp['ModeloPic'])){
-					$pics[$y]['label'] = $mod;	
+					$pics[$y]['label'] = $mod;
 					$pics[$y]['file'] = "/app/webroot/files/modelo_pic/pic/".$tmp['ModeloPic'][0]['pic_file']."/".$tmp['ModeloPic'][0]['pic'];
 				}else{
 					$pics[$y]['label'] = $mod;
 					$pics[$y]['file'] = "/img/motosil1.png";
 				}
 				$y++;
-			}		
+			}
 		return $pics;
 	}
-	
+
 	public function leads_procesando(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
@@ -735,11 +765,11 @@ $data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));
 		for($i=0;$i<count($leads);$i++){
 			//modelo pics
 			$modelos = explode(",",$leads[$i]['Lead']['modelos']);
-			$leads[$i]['pics'] = $this->_get_pics($modelos);	
+			$leads[$i]['pics'] = $this->_get_pics($modelos);
 		}
 		$this->set("leads",$leads);
 	}
-	
+
 	public function total_leads_procesando(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
@@ -748,7 +778,7 @@ $data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));
 		$this->set("total",$total);
 		$this->set("limit",25);
 	}
-	
+
 	public function total_leads_nuevos(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
@@ -757,7 +787,7 @@ $data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));
 		$this->set("total",$total);
 		$this->set("limit",25);
 	}
-	
+
 	public function leads_nuevos(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
@@ -770,7 +800,7 @@ $data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));
 		}
 		$this->set("leads",$leads);
 	}
-	
+
 	public function obtener_total_mis_leads(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
@@ -779,7 +809,7 @@ $data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));
 		$this->set('data', $data);
 		$this->render("/General/serialize_json");
 	}
-	
+
 	public function obtener_total_leads_nuevos(){
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 		$this->layout = "ajax";
@@ -788,12 +818,12 @@ $data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));
 		$this->set('data', $data);
 		$this->render("/General/serialize_json");
 	}
-	
+
 	public function lead_manager(){
 		$this->layout = "ajax";
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
 	}
-	
+
 	public function agregar_lead_directamente_get(){
 		$this->layout = "ajax";
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
@@ -807,17 +837,17 @@ $data = array("is_success"=>1,"flash"=>" Se Archivaron ".count($leads));
 			} else {
 				$errors = $this->Lead->validationErrors;
 				$this->set('data',array('is_success'=>0,'invalid_form'=>1,'error_list'=>$errors));
-			}	
+			}
 		}else {
 			$this->set('data',array("is_success"=>0,'invalid_form'=>1,"error_list"=>array("lead"=>"intento de lead sin datos")));
 		}
 		$this->render("/General/serialize_json");
 	}
-	
+
 	public function agregar_lead_directamente(){
-		$this->layout = "ajax";	
+		$this->layout = "ajax";
 		$this->_filter_employees_only($this->Session->read('agencia_id'));
-		if ($this->request->is('post')) {						
+		if ($this->request->is('post')) {
 			$this->Lead->create();
 			if ($this->Lead->save($this->request->data['Lead'])) {
 				$history_data = array("LeadHistoria"=>array("user_id"=>$this->Auth->user('id'),"lead_id"=>$this->Lead->getLastInsertId(),"fecha"=>date("Y-m-d H:i:s"),"status"=>1));

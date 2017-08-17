@@ -14,4 +14,4 @@ foreach($result['marcas'] as $r){
 <dt>Total:</dt>
 <dd> <?php echo $total;?></dd>
 </dl>
-<a href="/index.php/leads/csv_downloads?reporte=1" class="btn btn-small"><i class="fa-icon-table"></i> Bajar CSV</a>
+<a href="/index.php/leads/csv_downloads?reporte=1" class="btn btn-small"><i class="fa-icon-table"></i> Bajar Excel</a>
