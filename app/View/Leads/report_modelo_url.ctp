@@ -9,9 +9,9 @@ foreach($result['marcas'] as $r){
 <dt><?php echo $r['marca'];?></dt>
 <dd> <?php echo $r['total'];?></dd>
 <dt>Modelos</dt>
-<dd><ul> <?php 
+<dd><ul> <?php
 if(isset($r['modelos'])){
-foreach($r['modelos'] as $m){ ?> 
+foreach($r['modelos'] as $m){ ?>
 	<li><?php echo $m['modelo'];?> : <?php echo $m['total'];?></li>
 	<?php } } ?></ul></dd>
 <?php
@@ -20,4 +20,4 @@ foreach($r['modelos'] as $m){ ?>
 <dt>Total:</dt>
 <dd> <?php echo $result['total'];?></dd>
 </dl>
-<a href="/index.php/leads/csv_downloads?reporte=2" class="btn btn-small"><i class="fa-icon-table"></i> Bajar CSV</a>
+<a href="/index.php/leads/csv_downloads?reporte=2" class="btn btn-small"><i class="fa-icon-table"></i> Bajar Excel</a>
