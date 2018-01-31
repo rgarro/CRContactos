@@ -13,4 +13,4 @@ foreach($pics as $p){
 <br>
 <?php echo $data['comentario']; ?>
 </div>
-<p>Muchas Gracias por utilizar los servicios de <a href="http://crmotos.com" target="_blank">CRMotots.com</a></p>
+<p>Muchas Gracias por utilizar los servicios de <a href="http://crmotos.com" target="_blank">CRMotos.com</a></p>
