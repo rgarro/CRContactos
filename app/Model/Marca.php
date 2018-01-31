@@ -57,7 +57,7 @@ class Marca extends AppModel {
 
 	 public $hasMany = array(
         'Modelo' => array(
-            'className' => 'Modelo'
+            'className' => 'Modelo',
 						'order' => 'Modelo.modelo ASC'
         ),
         'MarcaAgencia' => array(
